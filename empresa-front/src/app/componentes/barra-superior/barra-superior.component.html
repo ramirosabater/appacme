@@ -1,0 +1,28 @@
+<mat-toolbar style=" background-color: #FCC02A;">
+    <div class="fil1">
+        <div class="col1">
+            <button (click)="toggleMenu()" [value]="menuOpen ? 'true' : 'false'">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="logo"><img src="assets/logo-acme.png"
+                    class="card-img-top  p-2" alt="Logo"></div>
+            <div class="logo-min"><img src="assets/logo-acme-min.png" alt="Logo"></div>
+        </div>
+        <div class="col2">
+
+            <h5 class="col-md-3">{{loginService.data.user.nombre}} {{loginService.data.user.apellido}} </h5>
+            <span class="example-spacer"></span>
+
+            <!-- <mat-icon (click)="showLogout = !showLogout"><i class="fa-solid fa-circle-user"></i></mat-icon>
+            <a class="logout" (click)="logout()" *ngIf="showLogout"><i class="fa-solid fa-right-from-bracket">Cerrar sesion</i></a>
+             -->
+            <mat-icon (click)="toggleLogout()"><i class="fa-solid fa-right-from-bracket"></i></mat-icon>
+            <div class="logout-menu" *ngIf="showLogout">
+                <a (click)="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i>Cerrar sesion
+                </a>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>

@@ -1,0 +1,69 @@
+nav {
+    
+    width: 350px;
+    
+    
+    
+    
+}
+
+nav .uls {
+    height: 100%;
+    width: 350px;
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 2em;
+    
+    
+    overflow-y: auto;
+}
+
+nav .uls .ul {
+    margin: 0px;
+}
+
+nav .uls ul li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+nav .uls ul h2 {
+    background-color: rgb(2, 2, 2);
+    color: rgb(241, 241, 241);
+    padding: 5px 10px;
+}
+
+nav .uls ul li a {
+    color: rgb(196, 196, 196);
+    text-decoration: none;
+}
+
+nav .uls ul li .logout {
+    cursor: pointer;
+}
+
+.logout {
+    font-size: 16px;
+}
+
+.ul {
+    padding-left: 10%;
+}
+
+.logo {
+    padding-left: 10%;
+}
+
+
+
+
+@media (max-width:950px) {
+  
+    nav .uls {
+        background-color: rgba(26, 26, 26,0.9);
+       max-width: 75%;
+    }
+
+}

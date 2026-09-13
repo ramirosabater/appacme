@@ -1,0 +1,98 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Nueva Licencia
+                </h4>
+                
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <form #formLicencia="ngForm" (ngSubmit)="guardarLicencia(formLicencia)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Inicio</label>
+                            <input type="date" class="form-control" name="fecha_inicio" aria-describedby=""
+                                placeholder="Ingrese fecha de inicio" [(ngModel)]="licencia.fecha_inicio"
+                                #fecha_inicio="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Fin</label>
+                            <input type="date" class="form-control" name="fecha_fin" aria-describedby=""
+                                placeholder="Ingrese fecha de fin" [(ngModel)]="licencia.fecha_fin" #fecha_fin="ngModel"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Reintegro</label>
+                            <input type="date" class="form-control" name="fecha_reintegro" aria-describedby=""
+                                placeholder="Ingrese fecha de reintegro" [(ngModel)]="licencia.fecha_reintegro"
+                                #fecha_reintegro="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label" id="form-label">Tipo Licencia</label>
+                            <select class="form-select" name="tipo_licencia" aria-label="Default select example"
+                                [(ngModel)]="licencia.tipo_licencia" #tipo_licencia="ngModel" required>
+                                <option value="0">Seleccione una opción</option>
+                                <option *ngFor="let tipo of tiposLicencia" value="{{tipo.id_tipo}}">{{tipo.descripcion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Descripcion</label>
+                            <textarea class="form-control" name="descripcion" aria-describedby=""
+                                placeholder="Ingrese una descripción" [(ngModel)]="licencia.descripcion"
+                                #descripcion="ngModel" required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Archivo Adjunto</label>
+                            <input type="file" class="form-control" name="archivo_adjunto" aria-describedby=""
+                                placeholder="Ingrese un archivo adjunto" (change)="onFileChange($event)">
+                        </div>
+                    </div>
+                </div>
+                <!-- Guardar -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngIf="!loading" class="mb-3">
+                            <button type="submit" class="btn btn-warning m-2">Guardar</button>
+                            <input type="button" class="btn btn-light" value="Cancelar" (click)="cancelar()">
+                        </div>
+                        <div *ngIf="loading" class="">
+                            <p>
+                                <b>Guardando licencia... Por favor no salga de esta pagina.</b>
+                            </p>
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

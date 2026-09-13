@@ -1,0 +1,21 @@
+.contenedor {
+    display: flex;
+}
+
+
+
+.card {
+    margin: 2% 5% 10% 5%;
+    width: 90%;
+}
+
+
+@media (max-width:950px) {
+
+    .card {
+        width: 100%;
+        margin: 0px;
+        overflow-x: auto;
+    }
+
+}

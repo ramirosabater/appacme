@@ -1,0 +1,92 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-newspaper"></i> Novedades RRHH
+                </h4>
+            </div>
+        </div>
+
+        <div class="descargas">
+            <h4>Descarga de novedades</h4>
+            <div class="formulario">
+                <div class="fechas">
+                    <input type="date" name="fecha_inicio" id="fecha_inicio" #fecha_inicio>
+                    <input type="date" name="fecha_fin" id="fecha_fin" #fecha_fin>
+                </div>
+                <div class="selector-boton">
+                    <select name="empresa" id="empresa" #empresa>
+                        <option value="0">Seleccione una empresa</option>
+                        <option *ngFor="let empresa of empresas" value="{{empresa.id_empresa}}">
+                            {{empresa.nombre_empresa}}</option>
+                    </select>
+                    <button (click)="exportar(fecha_inicio,fecha_fin, empresa)" class="btn btn-sm">Exportar</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div *ngIf="listadoNovedades.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Licencias</h3>
+            <div *ngFor="let listado of listadoNovedades" class="">
+                <div class="info p-2">
+                    <p>Fecha <b>{{listado.fecha_creacion}}</b></p>
+                    <p>Empleado: <b>{{listado.nombre}} {{listado.apellido}}</b></p>
+                    <p>Novedad: <b class="etiqueta-secondary">{{listado.desc_novedades}}</b></p>
+                    <p>Cantidad: <b>{{listado.cantidad}}</b></p>
+                    <td *ngIf="listado.estado == 1">
+                        <p class="etiqueta-success">Activa</p>
+                    </td>
+                    <td *ngIf="listado.estado != 1">
+                        <p class="etiqueta-warning">Esta novedad fue eliminada</p>
+                    </td>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body animation_aparecer vista-monitor">
+            <table *ngIf="listadoNovedades.length > 0" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Empleado</th>
+                        <th>Novedad</th>
+                        <th>Cantidad</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let listado of listadoNovedades">
+                        <td>{{listado.fecha_creacion}}</td>
+                        <td>{{listado.apellido}} {{listado.nombre}}</td>
+                        <td>{{listado.desc_novedades}}</td>
+                        <td>{{listado.cantidad}}</td>
+                        <td *ngIf="listado.estado == 1">
+                            <p class="etiqueta-success">Activa</p>
+                        </td>
+                        <td *ngIf="listado.estado != 1">
+                            <p class="etiqueta-warning">Esta novedad fue eliminada</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="listadoNovedades.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay novedades</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Las novedades se mostrarán aquí.
+            </div>
+        </div>
+
+
+    </div>
+</div>

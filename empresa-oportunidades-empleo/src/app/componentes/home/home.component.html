@@ -1,0 +1,122 @@
+<section class="banner text-white d-flex justify-content-start align-items-end">
+    <h1>#Acme</h1>
+</section>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>Oportunidades de Empleo</h2>
+            <div class="d-flex justify-content-between mb-4">
+                <input type="text" class="form-control me-2 mr-1" placeholder="Buscar vacante" [(ngModel)]="searchTerm" (input)="applyFilters()">
+                <select class="form-control me-2 mr-1" [(ngModel)]="selectedUbicacion" (change)="applyFilters()">
+                    <option value="">Ubicación</option>
+                    <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion">{{ ubicacion }}</option>
+                </select>
+                <select class="form-control me-2 mr-1" [(ngModel)]="selectedArea" (change)="applyFilters()">
+                    <option value="">Área</option>
+                    <option *ngFor="let area of areas" [value]="area">{{ area }}</option>
+                </select>
+                <button class="btn btn-outline-warning" (click)="clearFilters()">Limpiar</button>
+            </div>
+
+            <div *ngIf="loading" class="text-center my-4">
+                <div class="spinner-border text-warning" role="status">
+                    
+                </div>
+                <p class="mt-2">Cargando oportunidades...</p>
+            </div>
+            <div *ngIf="!loading">
+                <div *ngIf="paginatedOportunidades.length > 0; else noOportunidades">
+                    <div *ngFor="let oportunidad of paginatedOportunidades" class="card job-card shadow-sm rounded-3 mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ oportunidad.titulo }}</h5>
+                            <p class="card-text">
+                                <i class="fas fa-map-marker-alt"></i> {{ oportunidad.ubicacion }}
+                            </p>
+                            <p class="card-text"><i class="fas fa-industry"></i> {{ oportunidad.area }}</p>
+                            <p class="card-text"><i class="fas fa-clock"></i> {{ oportunidad.carga_horaria }} | {{
+                                oportunidad.modalidad }}</p>
+                            <p class="text-muted">{{ timeAgo(oportunidad.fecha_publicacion) }}</p>
+                            <a [routerLink]="['/detalle-oferta', oportunidad.id_empleo]" class="text-warning">Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-template #noOportunidades>
+                <p class="text-center">No hay oportunidades de empleo disponibles en este momento.</p>
+            </ng-template>
+
+            <div class="d-flex justify-content-center mt-4 mb-4" *ngIf="currentPage * itemsPerPage < oportunidadesFiltradas.length">
+                <button class="btn btn-warning" (click)="nextPage()">Cargar Más</button>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Nosotros</h5>
+                    <p>
+                        Acme nació en 1968 como un emprendimiento familiar, dirigiendo y construyendo obras de terceros.<br><br>
+                        En 1973 inauguramos el primer local comercial donde, además de vender productos pre-moldeados de elaboración propia, comenzamos a revender otros materiales gruesos que completaran la oferta.<br><br>
+                        Con el paso del tiempo, el negocio puso su acento en la comercialización de productos para todas las etapas de obra. Establecimos desde el inicio, como uno de los propósitos más importantes, que nuestros clientes puedan disponer de los materiales de manera continua.<br><br>
+                        Eso nos condujo a tener actualmente el stock más grande y completo de la Patagonia.<br><br>
+                        <b>Con más de 60.000 m2 de superficie dedicada, ofrecemos toda la gama necesaria para cubrir desde el principio al final de la obra con más de 100 marcas líderes que nos acompañan y respaldan desde el principio.</b><br><br>
+                        Capacitamos permanentemente a nuestro equipo comercial para seguir brindando, en cada proyecto que nos confían, el mejor asesoramiento según el tipo de cliente: consumidor final, empresas, grandes obras, revendedores, profesionales y gremios.<br><br>
+                        Nuestro objetivo diario es mantener el liderazgo caracterizado por la calidad, profesionalismo y respeto hacia quienes proveen, trabajan y compran nuestros productos y servicios.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a [routerLink]="['/postularse', 'cvs']" class="btn btn-warning apply-btn w-100 mt-4"><i
+                            class="fas fa-paper-plane"></i>
+                        Envia tu cv</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="py-4 mt-5 footer-background" style="color: #4d3e00; ">
+    <div class="container">
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="text-center">
+                <h5 class="mb-2">Contacto</h5>
+                <p class="mb-1">📧 contacto@acme.com</p>
+            </div>
+            <div class="text-center">
+                <h5 class="mb-2">Síguenos</h5>
+                <a href="https://www.facebook.com/AcmeOficial/" target="_blank" class="text-white social-icon mr-2">
+                    <i class="fab fa-facebook fa-2x"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/acme/?originalSubdomain=ar" target="_blank" class="text-white social-icon mr-2">
+                    <i class="fab fa-linkedin fa-2x"></i>
+                </a>
+                <a href="https://www.instagram.com/acme_oficial/" target="_blank" class="text-white social-icon">
+                    <i class="fab fa-instagram fa-2x"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-3">
+        <p class="mb-0" style="font-size: 0.9rem;">&copy; 2025 ACME. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<style>
+    .job-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .social-icon:hover {
+        color: #171200 !important;
+    }
+
+    .footer-background {
+        background: url('assets/fondo-footer.png') no-repeat center center;
+        background-size: cover;
+    }
+</style>

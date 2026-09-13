@@ -1,0 +1,108 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header animation_aparecer">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Lista de oportunidades
+                </h4>
+
+            </div>
+            <div class="d-flex">
+                <div><button class="btn btn-light" [routerLink]="['/nueva-oportunidad']">Nueva Oportunidad</button>
+                </div>
+                <div class="ms-2"><button class="btn btn-light" [routerLink]="['/lista-postulantes-generales']">Lista de Postulantes</button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div *ngIf="oportunidades.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Oportunidades</h3>
+            <div *ngFor="let oportunidad of oportunidades" class="">
+                <div class="info p-2">
+                    <p>Nro Publicacion: <b>000-{{oportunidad.id_empleo}}</b></p>
+                    <p>Titulo Oportunidad: <b class="etiqueta-secondary">{{oportunidad.titulo}}</b></p>
+                    <p>Fecha Publicacion: <b>{{oportunidad.fecha_publicacion | date:'yyyy-MM-dd'}}</b></p>
+                    <p>Fecha Fin Publicacion: <b>{{oportunidad.fecha_fin_publicacion | date:'yyyy-MM-dd'}}</b></p>
+                    <p>Area: <b>{{oportunidad.area}}</b></p>
+                    <p class="estado">Estado: <b class="etiqueta-{{ getColorEstado(oportunidad.estado) }}">
+                            {{oportunidad.estado}}</b></p>
+
+
+                    <div class="boton">
+                        <a class="btn btn-light"
+                            [routerLink]="['/detalle-oportunidad/', oportunidad.id_empleo ]">ver</a>
+                    </div>
+                    <div class="boton">
+                        <a class="btn btn-light"
+                            [routerLink]="['/editar-oportunidad/', oportunidad.id_empleo ]">editar</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body vista-monitor">
+            <table *ngIf="oportunidades.length > 0" class="table table-sm table-hover">
+                <thead>
+                    <tr>
+
+                        <th>Nro Publicacion:</th>
+                        <th>Titulo Oportunidad:</th>
+                        <th>Fecha Publicacion:</th>
+                        <th>Fecha Fin Publicacion:</th>
+
+                        <th>Area:</th>
+                        <th>Estado:</th>
+                        <th>Ver:</th>
+                        <th>Editar:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let oportunidad of oportunidades">
+
+                        <td>
+                            <p class="etiqueta-secondary">{{oportunidad.id_empleo}}</p>
+                        </td>
+                        <td>{{oportunidad.titulo}}</td>
+                        <td>{{oportunidad.fecha_publicacion | date:'yyyy-MM-dd'}}</td>
+                        <td>{{oportunidad.fecha_fin_publicacion | date:'yyyy-MM-dd'}}</td>
+
+                        <td>
+                            <p>{{oportunidad.area}} </p>
+                        </td>
+                        <p class="estado"> <b
+                                class="etiqueta-{{ getColorEstado(oportunidad.estado) }}">{{oportunidad.estado}}</b></p>
+                        <td>
+                            <a class="btn btn-light btn-sm"
+                                [routerLink]="['/detalle-oportunidad/', oportunidad.id_empleo ]">ver</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-light btn-sm"
+                                [routerLink]="['/editar-oportunidad/', oportunidad.id_empleo ]">editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div *ngIf="oportunidades.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay oportunidades para mostrar</h4>
+            </div>
+            <!-- <div class="alert alert-warning" role="alert">
+                Solicite una licencia para poder verla
+            </div> -->
+        </div>
+
+
+    </div>
+</div>

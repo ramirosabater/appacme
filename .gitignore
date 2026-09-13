@@ -1,0 +1,30 @@
+# --- Backend (empresa) ---
+empresa/node_modules
+empresa/uploads
+empresa/.env
+
+# --- Frontend principal (empresa-front) ---
+empresa-front/node_modules
+empresa-front/dist
+empresa-front/.angular
+
+# --- Frontend de empleos (empresa-oportunidades-empleo) ---
+empresa-oportunidades-empleo/node_modules
+empresa-oportunidades-empleo/dist
+empresa-oportunidades-empleo/.angular
+
+# --- Archivos con datos sensibles / scratch, no deben versionarse ---
+Query.txt
+
+# --- General ---
+node_modules/
+dist/
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

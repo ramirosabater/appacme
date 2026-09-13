@@ -1,0 +1,132 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header animation_aparecer">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Rendiciones
+                </h4>
+
+            </div>
+
+        </div>
+
+        <div class="descargas">
+            <h4>Descarga de rendiciones</h4>
+            <div class="formulario">
+                <div class="fechas">
+                    <input type="date" name="fecha_inicio" id="fecha_inicio" #fecha_inicio>
+                    <input type="date" name="fecha_fin" id="fecha_fin" #fecha_fin>
+                    <select name="" id="" #empleado>
+                        <option value="">Seleccione un empleado</option>
+                        <option *ngFor="let empleado of empleados" value="{{empleado.id_empleado}}">{{empleado.nombre}}
+                            {{empleado.apellido}}</option>
+
+                    </select>
+                </div>
+                <div class="selector-boton">
+                    <button class="btn btn-sm" (click)="filtrar(fecha_inicio, fecha_fin, empleado)">Filtrar</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="rendiciones.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Rendiciones</h3>
+            <div *ngFor="let rendicion of rendiciones" class="">
+                <div class="info p-2">
+                    <p>Nro de Solicitud: <b>000-{{rendicion.id_solicitud_dinero}}</b></p>
+                    <p>Nombre de usuario: <b>{{rendicion.usuario}}</b></p>
+                    <p>Proveedor: <b>{{rendicion.proveedor}}</b></p>
+                    <p>Importe sin IVA: <b>${{rendicion.importe_sin_iva}}</b></p>
+                    <p>Numero de ticket <b>>{{rendicion.nro_ticket}}</b></p>
+                    <p>Fecha Ticket: <b>{{rendicion.fecha_ticket}}</b></p>
+                    <p>Cuit: <b>{{rendicion.cuit}}</b></p>
+                </div>
+            </div>
+            <div class="selector-boton">
+                <button class="btn btn-sm" (click)="exportar()">Exportar</button>
+            </div>
+        </div>
+
+        <div class="card-body vista-monitor">
+            <table *ngIf="rendiciones.length > 0" class="table table-sm table-hover">
+                <thead>
+                    <tr>
+
+                        <th>#Solicitud</th>
+                        <th>Usuario</th>
+                        <th>Proveedor</th>
+                        <th>Importe sin IVA</th>
+                        <th>#Ticket</th>
+                        <th>Fecha Ticket</th>
+                        <th>Cuit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let rendicion of rendiciones">
+
+                        <td>
+                            <p>
+                                000-{{rendicion.id_solicitud_dinero}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{rendicion.usuario}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{rendicion.proveedor}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                ${{rendicion.importe_sin_iva}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{rendicion.nro_ticket}}
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                {{rendicion.fecha_ticket | date:'dd/MM/yyyy' }}
+                            </p>
+                        </td>
+                        <td *ngIf="rendicion.cuit">
+                            <p>
+                                {{rendicion.cuit}}
+                            </p>
+                        </td>
+                        <td *ngIf="!rendicion.cuit">
+                            <p class="etiqueta-secondary">
+                                Sin Datos
+                            </p>
+                        </td>
+
+                    </tr>
+                </tbody>
+                <div class="selector-boton mt-3">
+                    <button class="btn btn-sm" (click)="exportar()">Exportar</button>
+                </div>
+            </table>
+
+        </div>
+
+        <div *ngIf="rendiciones.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay rendiciones para mostrar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Las rendiciones aparecerán aquí
+            </div>
+        </div>
+
+
+    </div>
+</div>

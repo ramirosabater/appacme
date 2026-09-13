@@ -1,0 +1,73 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-calendar-days"></i> Nueva solicitud de vacaciones
+                </h4>                
+
+                <p class="alert alert-primary mt-2">La cantidad de dias de vacaciones que le corresponde son
+                    <b>{{empleado.dias_vacaciones}}</b> y le quedan <b>{{empleado.dias_restantes}}</b> disponibles.
+                </p>
+
+
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <form #formVacaciones="ngForm" (ngSubmit)="guardarVacaciones(formVacaciones)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Inicio</label>
+                            <input type="date" class="form-control" name="fecha_inicio" aria-describedby=""
+                                placeholder="Ingrese fecha de inicio" [(ngModel)]="vacacion.fecha_inicio"
+                                #fecha_inicio="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Fin</label>
+                            <input type="date" class="form-control" name="fecha_fin" aria-describedby=""
+                                placeholder="Ingrese fecha de fin" [(ngModel)]="vacacion.fecha_fin" #fecha_fin="ngModel"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Reintegro</label>
+                            <input type="date" class="form-control" name="fecha_reintegro" aria-describedby=""
+                                placeholder="Ingrese fecha de reintegro" [(ngModel)]="vacacion.fecha_reintegro"
+                                #fecha_reintegro="ngModel" required>
+                        </div>
+                    </div>
+                </div>
+                <!-- Guardar -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <button *ngIf="!loading" type="submit" class="btn btn-warning m-2">Guardar </button>
+                            <input *ngIf="!loading" type="button" class="btn btn-light" value="Cancelar"
+                                (click)="cancelar()">
+                            <div *ngIf="loading" class="spinner-border spinner-border-sm" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

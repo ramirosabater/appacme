@@ -1,0 +1,97 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+  <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+  <div class="card">
+
+    <div class="card-header animation_aparecer">
+      <div class="row">
+        <h4 class="col-md-9">
+          <i class="fa-solid fa-calendar-week"></i> Mis Solicitudes de dinero
+        </h4>
+
+      </div>
+      <div class="">
+        <div class="row">
+          <div class="col-md-6">
+            <select class="form-control mr-2" name="" id="" #tipo>
+              <option value="0">Seleccione tipo de solicitud</option>
+              <option *ngFor="let tipo of tiposSolicitudes" value="{{tipo.id_tipo_solicitud}}">{{tipo.descripcion}}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <input type="button" value="Nueva solicitud" class="btn btn-sm btn-secondary" (click)="nuevaSolicitud(tipo)">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <div class="vista-responsive">
+      <h3 class="p-2">Listado de Solicitudes</h3>
+      <div *ngIf="solicitudes.length > 0" class="">
+        <div *ngFor="let solicitud of solicitudes" class="info p-2">
+          <p>Nro Solicitud: <b>000-{{solicitud.id_solicitud_dinero}}</b></p>
+          <p>Tipo Solicitud: <b class="etiqueta-secondary">{{solicitud.descripcion}}</b></p>
+          <p>Fecha Solicitud: <b>{{solicitud.fecha_solicitud}}</b></p>
+          <p *ngIf="solicitud.monto_solicitado != 0">Monto solicitado: $<b>{{solicitud.monto_solicitado}}</b></p>
+          <p *ngIf="solicitud.monto_solicitado == 0">Monto solicitado: <b class="etiqueta-secondary">Sin datos</b></p>
+          <p>Estado: <b>{{solicitud.estado}}</b></p>
+          <div class="boton">
+            <a class="btn btn-light" [routerLink]="['/detalle-solicitud-dinero', solicitud.id_solicitud_dinero, solicitud.id_tipo_solicitud, 1]">ver</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body vista-monitor">
+      <h3 class="p-2">Listado de Solicitudes</h3>
+      <table *ngIf="solicitudes.length > 0" class="table table-sm table-hover">
+        <thead>
+          <tr>
+            <th>Nro Solicitud</th>
+            <th>Tipo Solicitud</th>
+            <th>Monto solicitado</th>
+            <th>Fecha Solicitud</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let solicitud of solicitudes">
+            <td>
+              000-{{solicitud.id_solicitud_dinero}}
+            </td>
+            <td>
+              <p class="etiqueta-secondary">{{solicitud.descripcion}}</p>
+            </td>
+            <td *ngIf="solicitud.monto_solicitado != 0">${{solicitud.monto_solicitado}}</td>
+            <td *ngIf="solicitud.monto_solicitado == 0"><p class="etiqueta-secondary">Sin datos</p></td>
+            <td>{{solicitud.fecha_solicitud}}</td>
+            <td>
+              <p class="etiqueta etiqueta-{{solicitud.estado_color}}">{{solicitud.estado}}</p>
+              
+            </td>
+            <td>
+              <a class="btn btn-light btn-sm" [routerLink]="['/detalle-solicitud-dinero', solicitud.id_solicitud_dinero, solicitud.id_tipo_solicitud, 1]">ver</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div *ngIf="solicitudes.length == 0" class="col-md-12">
+      <div class="mb-3 text-center">
+        <h4>No hay solicitudes para mostrar</h4>
+      </div>
+      <div class="alert alert-warning" role="alert">
+        Realice una solicitud para poder verla
+      </div>
+    </div>
+
+  </div>
+</div>

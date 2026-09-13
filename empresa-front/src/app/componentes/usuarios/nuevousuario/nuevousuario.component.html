@@ -1,0 +1,205 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    {{titulo}}
+                </h4>
+                
+            </div>
+
+        </div>
+
+        <div class="card-body animation_aparecer">
+            <h4>Datos Basicos</h4>
+            <p *ngIf="user.id_estado != 1" class="alert alert-danger">Este usuario se encuentra desactivado</p>
+            <form #formUsuario="ngForm" (ngSubmit)="guardar(formUsuario)">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" aria-describedby=""
+                                placeholder="Ingrese nombre de usuario" [(ngModel)]="user.nombre">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" name="apellido" aria-describedby=""
+                                placeholder="Ingrese apellido de usuario" [(ngModel)]="user.apellido">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div *ngIf="new == 0" class="mb-3">
+                            <label for="" class="form-label">DNI</label>
+                            <input type="text" name="dni" class="form-control" placeholder="Ingrese dni del usuario"
+                                [(ngModel)]="user.dni">
+                        </div>
+                        <div *ngIf="new != 0" class="mb-3">
+                            <label for="" class="form-label">DNI</label>
+                            <input type="text" name="dni" class="form-control" placeholder="Ingrese dni del usuario"
+                                [(ngModel)]="user.dni" disabled="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Correo electronico</label>
+                            <input type="email" class="form-control" name="email" aria-describedby=""
+                                placeholder="Ingrese email de usuario" [(ngModel)]="user.email" required="required">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Telefono</label>
+                            <input type="text" name="telefono" class="form-control"
+                                placeholder="Ingrese telefono del usuario" [(ngModel)]="user.telefono">
+                        </div>
+                    </div>
+                    <div *ngIf="new != 0" class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Estado</label>
+                            <p class="alert alert-{{estado_color}}">{{estado}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div *ngIf="new == 0" class="mb-3">
+                            <label for="" class="form-label">Legajo</label>
+                            <input type="text" name="n_legajo" class="form-control" placeholder="Ingrese legajo del usuario"
+                                [(ngModel)]="empleado.n_legajo">
+                        </div>
+                        <div *ngIf="new != 0" class="mb-3">
+                            <label for="" class="form-label">Legajo</label>
+                            <input type="text" name="n_legajo" class="form-control" placeholder="Ingrese legajo del usuario"
+                                [(ngModel)]="empleado.n_legajo" disabled="">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label mr-2">Sector</label>
+                            <select class="p-1" name="id_sector" aria-label=" select " #sector
+                                [(ngModel)]="empleado.id_sector">
+                                <option value="0" selected>Seleccione un sector</option>
+                                <option *ngFor="let sector of sectores" value="{{sector.id_sector}}">{{sector.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label mr-2">Posicion</label>
+                            <select class="p-1" name="sector" aria-label=" select " #posicion
+                                [(ngModel)]="empleado.id_posicion">
+                                <option value="0" selected>Seleccione una  posicion</option>
+                                <option *ngFor="let posicion of posiciones" value="{{posicion.id_posicion}}">{{posicion.descripcion}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label mr-2">Lider</label>
+                            <select class="p-1" name="jefe_directo" aria-label=" select " #jefe
+                                [(ngModel)]="empleado.jefe_directo">
+                                <option value="0" selected>Seleccione un lider</option>
+                                <option *ngFor="let jefe of jefes" value="{{jefe.id_usuario}}">{{jefe.apellido}} {{jefe.nombre}}
+                                    </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label mr-2">Empresa</label>
+                            <select class="p-1" name="empresa" aria-label=" select " #empresa
+                                [(ngModel)]="empleado.id_empresa">
+                                <option value="0" selected>Seleccione una empresa</option>
+                                <option *ngFor="let empresa of empresas" value="{{empresa.id_empresa}}">{{empresa.nombre_empresa}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-light m-2">Guardar</button>
+                        <input type="button" class="btn btn-light m-2" value="Cancelar" (click)="cancelar()">
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+        <div *ngIf="new != 0" class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Acciones para usuario</h4>
+                    <input type="button" class="btn btn-light" id="" value="{{etiqueta_estado}}"
+                        (click)="changeEstado()">
+                    <input type="button" class="btn btn-light m-2" value="Reset password" (click)="resetPassword()">
+                </div>
+                <div class="col-md-6">
+                    <h4>Roles</h4>
+
+                    <div class="card p-2">
+
+                        <div class="mb-3" *ngIf="roles_usuario.length > 0">
+                            <h5 for="">Listado de roles</h5>
+
+                            <div class="card p-1 mb-1" *ngFor="let rol of roles_usuario">
+                                <div class="row p-2">
+                                    <div class="col-md-9">
+                                        <p>{{rol.rol}}</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b (click)="eliminarRol(rol.id_rol)"
+                                            class="btn btn-secondary btn-sm">Eliminar</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" *ngIf="roles_usuario.length == 0">
+                            <label for="" class="form-label">Listado de roles</label>
+
+                            <p class="alert alert-secondary">No hay roles asignados a este usuario</p>
+
+                        </div>
+
+                        <div class="card p-2 mb-3">
+                            <label for="" class="form-label">Agregar Rol</label>
+                            <select class="form-select" name="rol" aria-label="Default select example" #rol>
+                                <option value="0" selected>Seleccione un rol</option>
+                                <option *ngFor="let rol of roles" value="{{rol.id_rol}}">{{rol.rol}}</option>
+                            </select>
+                            <input type="button" class="btn btn-outline-secondary m-2" value="Agregar"
+                                (click)="guardarRol(rol)">
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

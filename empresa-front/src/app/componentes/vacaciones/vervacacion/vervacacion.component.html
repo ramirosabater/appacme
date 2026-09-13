@@ -1,0 +1,137 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+
+            <div class="row">
+                <h4 class="col-md-9">
+                    Datos de la solicitud de vacaciones
+                </h4>
+
+            </div>
+        </div>
+
+        <!-- Datos de la vacacion en una tabla: fecha_inicio, fecha_fin, fecha_reintegro, cantidad_dias, estado-->
+
+        <div class="card-body">
+            <p class="alert alert-{{vacacion.estado_color}}">Esta solicitud de vacaciones se encuentra
+                {{vacacion.estado_string}}
+
+            </p>
+            <table class="table table-hovered">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Solicitante</th>
+                        <td>{{vacacion.nombre}} {{vacacion.apellido}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de Solicitud</th>
+                        <td>{{vacacion.created_at}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de inicio</th>
+                        <td>{{vacacion.fecha_inicio}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de fin</th>
+                        <td>{{vacacion.fecha_fin}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de reintegro</th>
+                        <td>{{vacacion.fecha_reintegro}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cantidad de dias</th>
+                        <td>{{vacacion.cantidad_dias}}</td>
+                    </tr>
+
+                    <tr *ngIf="vacacion.estado == 2">
+                        <th>Motivo de rechazo por parte del lider</th>
+                        <td>
+                            <p class="alert alert-secondary">{{vacacion.comentario}}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Revisión por parte del lider</th>
+                        <td>
+                            <div class="" *ngIf="user == 1">
+                                <div class="" *ngIf="vacacion.estado == 0">
+                                    <div class="" *ngIf="rechazar != 1">
+                                        <input *ngIf="!loading" type="button" value="Aprobar"
+                                            class="btn btn-sm btn-primary m-1" (click)="aprobarVacaciones()">
+                                        <input *ngIf="!loading" type="button" value="Rechazar"
+                                            class="btn btn-sm btn-light m-1" (click)="btnRechazar()">
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="" *ngIf="rechazar == 1">
+                                        <div *ngIf="!loading" class="">
+                                            <label for="">Motivo</label>
+                                            <textarea name="" id="" cols="6" class="form-control"
+                                                placeholder="Ingrese motivo" #motivoJefe></textarea>
+                                            <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                                (click)="rechazarVacaciones(motivoJefe)">
+                                            <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                                (click)="btnCancelarRechazar()">
+                                        </div>
+
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="vacacion.estado == 3">
+                        <th>Motivo de eliminacion</th>
+                        <td>
+                            <p class="alert alert-secondary">{{vacacion.comentario}}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Estado</th>
+                        <td>
+                            <p class="alert alert-{{vacacion.estado_color}}">{{vacacion.estado_string}} </p>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <table class="table table-hovered">
+                <tr
+                    *ngIf="vacacion.estado == 1 && usuariosService.isAdminAdmin && esFechaMenorHoy(vacacion.fecha_i)">
+                    <th>Eliminar solicitud de vacaciones</th>
+                    <td>
+                        <input *ngIf="!banderaEliminar" type="button" class="btn btn-sm btn-secondary" value="Eliminar"
+                            (click)="eliminarVacaciones()">
+                        <div *ngIf="banderaEliminar" class="form">
+                            <textarea name="" id="" cols="" rows="3" placeholder="Ingrese motivo" class="form-control"
+                                #motivoEliminacion></textarea><br>
+                            <input type="button" class="btn btn-sm btn-secondary mr-2" value="Eliminar"
+                                (click)="eliminarV(motivoEliminacion)">
+                            <input type="button" class="btn btn-sm btn-secondary mr-2" value="Cancelar"
+                                (click)="cancelarEliminar()">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+    </div>

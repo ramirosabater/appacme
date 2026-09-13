@@ -1,0 +1,140 @@
+@import '~bootswatch/dist/materia/bootstrap.min.css';
+
+
+.etiqueta-warning {
+    color: #997404;
+    background-color: #fff3cd;
+    border: 1px solid #ffe69c;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: .25rem;
+
+
+}
+
+.etiqueta-success {
+    color: #146c43;
+    background-color: #d4edda;
+    border: 1px solid #a3cfbb;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: .25rem;
+
+}
+
+.etiqueta-danger {
+    color: #b02a37;
+    background-color: #f8d7da;
+    border: 1px solid #f1aeb5;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: .25rem;
+
+}
+
+.etiqueta-secondary {
+    color: #6c757d;
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: .25rem;
+
+}
+
+.etiqueta-third {
+  color: #51145c;
+  background-color: #ebd4ef;
+  border: 1px solid #e3c3e9;
+  display: inline-block;
+  padding: 0px 5px;
+  border-radius: .25rem;
+
+}
+
+p{
+    margin: 0px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.row{
+    align-items: center;
+}
+
+.etiqueta-primary {
+  color: #dff1ff;
+  background-color: #2196f3;
+  border: 1px solid #69b5f3;
+  display: inline-block;
+  padding: 0px 5px;
+  border-radius: .25rem;
+
+}
+
+
+/*
+  ANIMACIONES
+*/.animation_aparecer{
+    position: relative;
+    -webkit-animation-name: animateaparecer;
+    -webkit-animation-duration: 2s;
+    animation-name: animateaparecer;
+    animation-duration: 2s
+  }
+  
+  @-webkit-keyframes animateaparecer {
+    from {
+  
+        opacity: 0
+    }
+    to {
+  
+        opacity: 1
+    }
+  }
+  
+  @keyframes animateaparecer {
+    from {
+  
+        opacity: 0
+    }
+    to {
+  
+        opacity: 1
+    }
+  }
+  
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 2s;
+    animation-name: animatebottom;
+    animation-duration: 2s
+  }
+  
+  @-webkit-keyframes animatebottom {
+    from {
+      bottom: -100px;
+        opacity: 0
+    }
+    to {
+      bottom: 0px;
+        opacity: 1
+    }
+  }
+  
+  @keyframes animatebottom {
+    from {
+      bottom: -100px;
+        opacity: 0
+    }
+    to {
+      bottom: 0;
+        opacity: 1
+    }
+  }
+

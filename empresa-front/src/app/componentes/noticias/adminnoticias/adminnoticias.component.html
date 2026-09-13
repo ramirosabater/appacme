@@ -1,0 +1,79 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+    <div class="card">
+
+
+        <div class="card-tabla">
+            <div class="card-header">
+                <div class="row">
+                    <h4 class="col-md-12">
+                        <i class="fa-regular fa-newspaper"></i> Administrador de noticias
+                    </h4>
+
+                </div>
+                <!--Boton nueva noticia-->
+                <div class="nueva">
+                    <button class="btn btn-light" [routerLink]="['/new-noticia', 0, 0]">Nueva noticia</button>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+
+
+                <div *ngIf="noticias.length > 0" class="row">
+                    <div class="col-md-12">
+                        <div class="mb-3">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Titulo</th>
+                                        <th scope="col">Img</th>
+                                        <th scope="col">Estado</th>
+
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let noticia of noticias">
+                                        <td>{{noticia.titulo}}</td>
+                                        <td>
+                                            <img src="{{url}}{{noticia.url}}" alt="Imagen de noticia" class="img-fluid"
+                                                width="100px">
+                                        </td>
+                                        <td>
+                                            <p class="etiqueta-{{noticia.estado_color}}">
+                                                {{noticia.estado_string}}
+                                            </p>
+                                        </td>
+
+                                        <td>
+                                            <!--Etiqueta a para ver noticia-->
+                                            <a class="btn btn-light btn-sm"
+                                                [routerLink]="['/new-noticia', noticia.id_noticia,1]">ver</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div *ngIf="noticias.length == 0" class="col-md-12">
+                <div class="mb-3 text-center">
+                    <h4>No hay noticias para mostrar</h4>
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    Cree una noticia para poder verla
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

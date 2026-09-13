@@ -1,0 +1,128 @@
+<barra-superior></barra-superior>
+
+<div class="contenedor ">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+
+
+
+    <!-- LISTA DE POSTULANTES -->
+    <div class="container my-3">
+
+        <app-boton-atras></app-boton-atras>
+
+        <!-- SECCIÓN 3: FILTRO POR PUESTO DE INTERÉS -->
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h4 class="mb-0"><strong>Lista de postulantes generales</strong></h4>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-start">
+                    <div class="col-md-8">
+                        <label for="filtroPuesto" class="form-label fw-bold">Filtrar por puesto de interés:</label>
+                        <select id="filtroPuesto" class="form-select" [(ngModel)]="categoriaSeleccionada" (change)="filtrarPostulantes()">
+                            <option value="">-- Todos los puestos --</option>
+                            <option *ngFor="let categoria of categorias" value="{{categoria.id_categoria_trabajo}}">{{categoria.descripcion_categoria}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mt-4 mt-md-0">
+                        <div class="d-flex flex-column gap-2  ">
+                            <button class="btn btn-light btn-sm w-100" (click)="limpiarFiltro()">
+                                <i class="fa-solid fa-rotate-left"></i> Limpiar filtro
+                            </button>
+
+                            <button class="btn btn-primary btn-sm w-100" 
+                            (click)="descargarCvsGenerales()">Descargar cvs generales
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contador de resultados filtrados -->
+                <div class="row mt-4">
+                    <div class="col-8">
+                        <div class="card bg-light">
+                            <div class="card-body d-flex text-center gap-2 py-2">
+                                <p class="m-1"><strong>Total filtrado</strong></p>
+                                <p class="text-primary m-1"><strong>{{postulantes.length}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- SECCIÓN 4: LISTA DE POSTULANTES -->
+
+        <!-- HEADER GENERAL -->
+        <button class="btn btn-light" *ngIf="!postulantes || postulantes.length === 0">
+            No hay postulantes a mostrar
+        </button>
+
+        <!--    <div class="card-header">
+                <div class="row">
+                    <p class="col-md-9"><strong>Lista de postulantes generales</strong>
+
+                    </p>
+                </div>
+
+            </div> -->
+
+        <div class="row" *ngFor="let postulante of postulantes">
+            <div class="col-md-12 my-3 ">
+                <div class="card shadow-sm border rounded-3 p-1">
+                    <div class="card-body">
+
+                        <!-- Sub-card: Información del postulante -->
+                        <div class="card bg-light mb-3">
+                            <div class="card-header"><strong>{{ postulante.nombre }} {{ postulante.apellido
+                                    }}</strong></div>
+                            <div class="card-body">
+                                <p class="card-text mb-0">
+                                    <strong>Número de Postulante:</strong> {{ postulante.id_postulante }}<br />
+                                    <strong>Email:</strong> {{ postulante.email }}<br />
+                                    <strong>Documento:</strong> {{ postulante.tipo_documento | uppercase }} {{
+                                    postulante.nro_documento }}<br />
+                                    <strong>Teléfono:</strong> {{ postulante.telefono }}<br />
+                                    <strong>Género:</strong> {{ postulante.genero }}<br />
+                                    <strong>Localidad:</strong> {{ postulante.localidad }}<br />
+                                    <strong>Fecha de postulación:</strong> {{ postulante.fecha_postulacion |
+                                    date:'dd/MM/yyyy' }}<br />
+                                    <strong>Estado:</strong> {{ postulante.estado }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sub-card: Puestos de interés -->
+                        <div class="card bg-light mb-3">
+                            <div class="card-header fw-semibold">Puestos de Interés</div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" *ngFor="let categoria of postulante.categorias">
+                                    {{ categoria.descripcion_categoria }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Botones -->
+                        <a *ngIf="postulante.curriculum_vitae" [href]="url + postulante.curriculum_vitae"
+                            target="_blank" class="btn btn-ligh">
+                            Ver CV
+                        </a>
+                        <button class="btn btn-secondary" *ngIf="!postulante.curriculum_vitae" disabled>
+                            Sin CV
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>

@@ -1,0 +1,55 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header animation_aparecer">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Herramientas y prendas
+                </h4>
+
+            </div>
+        </div>
+
+
+        <div  *ngIf="solicitudes.length != 0" class="card-body">
+            <table class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>Fecha solicitud</th>
+                        <th>Empleado</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let solicitud of solicitudes">
+
+                        <td>
+                            <p class="etiqueta-secondary">{{solicitud.fecha_pedido}}</p>
+                        </td>
+                        <td>{{solicitud.apellido}} {{solicitud.nombre}}</td>
+                        <td><p class="etiqueta-{{solicitud.estado_string?.color}}">{{solicitud.estado_string?.valor}}</p></td>
+                        <td>
+                            <a [routerLink]="['/detalle-pedido', solicitud.id_solicitud, 2]" class="btn btn-light btn-sm">ver</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div *ngIf="solicitudes.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay solicitudes para mostrar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Las solicitudes apareceran aqui
+            </div>
+        </div> 
+
+
+    </div>
+</div>

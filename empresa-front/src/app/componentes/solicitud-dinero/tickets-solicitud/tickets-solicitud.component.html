@@ -1,0 +1,53 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Tickets de la solicitud
+                </h4>
+            </div>
+            <div  *ngIf="!loading">
+                <input *ngIf="usuario == 1" type="button" value="Cargar ticket" (click)="cargarTicket()"
+                    class="btn btn-sm btn-secondary mr-4">
+
+                <input *ngIf="usuario == 1 && tickets.length != 0" type="button" value="Enviar Rendicion"
+                    (click)="presentarRendicion()" class="btn btn-sm btn-primary">
+            </div>
+            <div *ngIf="loading" class="">
+                <p>
+                    <b>Enviando rendicion... Por favor no salga de esta pagina.</b>
+                </p>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body">
+            <div *ngFor="let ticket of tickets" class="historial">
+                <p class="etiqueta-secondary">Nro Solicitud: <b>000-{{id_solicitud}}</b></p>
+                <p>Fecha ticket: <b>{{ticket.fecha_ticket}}</b></p>
+                <p>Proveedor: <b>{{ticket.proveedor}}</b></p>
+                <p>Punto de venta: <b>{{ticket.punto_venta}}</b></p>
+                <p>Nro de ticket: <b>{{ticket.nro_ticket}}</b></p>
+                <p>Importe sin IVA: <b>${{ticket.importe_sin_iva}}</b></p>
+                <p>CUIT: <b>{{ticket.cuit ? ticket.cuit : 'sin datos'}}</b></p>
+                
+                <a href="{{url}}{{ticket.url_imagen}}" class="btn btn-sm btn-secondary" target="_blank">ver</a>
+                <a *ngIf="usuario == 1" class="btn btn-sm btn-danger ml-2"
+                    (click)="eliminarTicket(ticket.id_ticket)">Eliminar</a>
+            </div>
+
+            <div *ngIf="tickets.length == 0" class="col-md-12">
+                <div class="mb-3 text-center">
+                    <h4>No hay tickets para mostrar</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

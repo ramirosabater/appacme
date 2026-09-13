@@ -1,0 +1,134 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card animation_aparecer">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    Nuevo Pedido
+                </h4>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <form #formPedido="ngForm">
+
+                <div class="detalle-pedido mb-4">
+                    <h3>Datos basicos</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Fecha: </label>
+                                <label for="" class="form-control">{{getFechaActual()}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Empleado: </label>
+                                <select name="" id="" class="form-control" #empleado>
+                                    <option value="0">Seleccione un empleado</option>
+                                    <option *ngFor="let empleado of empleados" value="{{empleado.id_empleado}}">{{empleado.apellido}} {{empleado.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="detalle-pedido">
+                    <h3>Detalle del Pedido</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Equipamento</label>
+                                <select name="" id="" class="form-control" #elemento>
+                                    <option value="0">Seleccione un equipamento</option>
+                                    <option *ngFor="let elemento of elementos" value="{{elemento.id_elemento}}">{{elemento.desc_elemento}}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Talle</label>
+                                <input type="text" class="form-control" name="" aria-describedby=""
+                                    placeholder="Ingrese un talle" #talle>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Cantidad</label>
+                                <input type="number" class="form-control" name="" aria-describedby=""
+                                    placeholder="Ingrese una cantidad" #cantidad>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <input type="button" class="btn btn-light m-2" value="Agregar" (click)="agregarElemento(elemento, talle, cantidad)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <table *ngIf="itemsSeleccionados.length != 0" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Talle</th>
+                                <th>Cantidad</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let elem of itemsSeleccionados">
+                                <td>{{elem.desc_elemento}}</td>
+                                <td>{{elem.talle}}</td>
+                                <td>{{elem.cantidad}}</td>
+                                <th> <input type="button" class="btn btn-sm btn-light m-2" value="quitar" (click)="eliminarElemento(elem.id_elemento)">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="row"></th>
+                                <td>
+                                    <h3>Cantidad elementos</h3>
+                                </td>
+                                <td>
+                                    <h3 class="etiqueta-secondary">{{cantidadElementos}}</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="itemsSeleccionados.length == 0" class="">
+                        <p class="etiqueta-secondary">No hay elementos en la lista</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div *ngIf="!loading" class="col-md-12">
+                        <input type="button" value="Guardar" class="btn btn-light m-2" (click)="guardar(empleado)">
+                        <input type="button" class="btn btn-light m-2" value="Cancelar" (click)="cancelar()">
+                    </div>
+                    <div *ngIf="loading" class="">
+                        <p>
+                            <b>Guardando solicitud... Por favor no salga de esta pagina.</b>
+                        </p>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

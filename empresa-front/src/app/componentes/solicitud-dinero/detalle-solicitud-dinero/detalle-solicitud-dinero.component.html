@@ -1,0 +1,199 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+
+            <div class="row">
+                <h4 class="col-md-9">
+                    Datos de la solicitud de dinero
+                </h4>
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <p class="alert alert-{{solicitud.estado_color}}">Esta solicitud de dinero se encuentra
+                {{solicitud.estado}}</p>
+
+            <div>
+                <div class="contenido mb-4">
+                    <h3>Datos basicos</h3>
+                    <table class="table table-hovered">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Tipo Solicitud</th>
+                                <td>
+                                    <p class="etiqueta-secondary">{{solicitud.descripcion}}</p>
+                                </td>
+                            </tr>
+                            <tr *ngIf="id_tipo == 1">
+                                <th scope="row">Categoria</th>
+                                <td *ngIf="solicitud.sub_tipo == 0">
+                                    <p class="etiqueta-secondary">
+                                        Solicitud
+                                    </p>
+                                </td>
+                                <td *ngIf="solicitud.sub_tipo == 1">
+                                    <p class="etiqueta-secondary">
+                                        Rendición
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Solicitante</th>
+                                <td>{{empleado.apellido}} {{empleado.nombre}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Fecha de Solicitud</th>
+                                <td>{{solicitud.fecha_solicitud}}</td>
+                            </tr>
+                            <tr *ngIf="id_tipo == 3">
+                                <th scope="row">Cantidad de dias</th>
+                                <td>{{solicitud.cantidad_dias}}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Observaciones</th>
+                                <td>{{solicitud.motivo_solicitud}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="id_tipo == 2" class="mb-4">
+                    <h3>Detalle de la solicitud</h3>
+                    <div class="p-2">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Monto</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                                <tr *ngFor="let detalle of solicitud.detalle">
+                                    <td>{{detalle.descripcion_categoria}}</td>
+                                    <td>{{detalle.importe}}</td>
+                                    <td>{{detalle.observaciones}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="monto-estado-items">
+                <div class="mb-4">
+                    <h2 *ngIf="solicitud.monto_solicitado != 0">Monto total solicitado: <b>${{solicitud.monto_solicitado}}</b></h2>
+                    <p>Estado: <b class="mr-2 etiqueta-{{solicitud.estado_color}}">{{solicitud.estado}}</b> </p>
+                    <h3>Historial</h3>
+                    <table class="table">
+                        <tbody>
+                            <tr *ngFor="let estado of solicitud.tipo_estado">
+                                <td>{{estado.fecha}}
+                                </td>
+                                <td>
+                                    <p class="etiqueta-secondary">{{estado.descripcion_tipo_estado}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <p *ngIf="solicitud.tipo_estado?.length == 0">
+                            Esta solicitud esta sujeta a revision
+                        </p>
+                    </table>
+                    <p><a *ngIf="prepararRendicion" class="btn btn-sm"
+                            [routerLink]="['/tickets-solicitud', user, solicitud.id_solicitud_dinero, id_tipo]">Preparar
+                            rendicion</a></p>
+                    <p><a *ngIf="visualizarRendicion"
+                            class="btn btn-sm"
+                            [routerLink]="['/tickets-solicitud', 2, solicitud.id_solicitud_dinero, id_tipo]">Ver
+                            rendicion</a></p>
+                </div>
+                <div *ngIf="solicitud.estado == 'pendiente'">
+                    <div class="acciones">
+                        <div class="" *ngIf="visualizaAcciones">
+                            <div class="">
+                                <div class="" *ngIf="rechazar != 1">
+                                    <input *ngIf="!loading" type="button" value="Aprobar"
+                                        class="btn btn-sm btn-primary m-1" (click)="aprobarSolicitud()">
+                                        <div *ngIf="visualizarRechazar">
+                                            <input *ngIf="!loading" type="button" value="Rechazar"
+                                        class="btn btn-sm btn-light m-1" (click)="btnRechazar()">
+                                        </div>
+                                    
+                                        <div *ngIf="loading">
+                                            <p>
+                                                <b>Enviando datos... Por favor no salga de esta pagina.</b>
+                                            </p>
+                                            <div class="spinner-border spinner-border-sm pl-2" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="" *ngIf="rechazar == 1">
+                                    <div *ngIf="!loading" class="">
+                                        <label for="">Motivo</label>
+                                        <textarea name="" id="" cols="6" class="form-control"
+                                            placeholder="Ingrese motivo" #motivoJefe></textarea>
+                                        <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                            (click)="rechazarSolicitud(motivoJefe)">
+                                        <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                            (click)="btnCancelarRechazar()">
+                                    </div>
+
+                                    <div *ngIf="loading">
+                                        <p>
+                                            <b>Enviando datos... Por favor no salga de esta pagina.</b>
+                                        </p>
+                                        <div class="spinner-border spinner-border-sm pl-2" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                 <div class="acciones-administracion">
+                    <div class="" *ngIf="user == 5">
+                        <div class="" *ngIf="aprobadoJefe">
+                            <div class="" *ngIf="!aprobadoAdministracion">
+                                <div class="" *ngIf="rechazar != 1">
+                                    <input *ngIf="!loading" type="button" value="Aprobar"
+                                        class="btn btn-sm btn-primary m-1" (click)="aprobarSolicitudAdministracion()">
+                                    <input *ngIf="!loading" type="button" value="Rechazar"
+                                        class="btn btn-sm btn-light m-1" (click)="btnRechazar()">
+                                    <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+
+                                <div class="" *ngIf="rechazar == 1">
+                                    <div *ngIf="!loading" class="">
+                                        <label for="">Motivo</label>
+                                        <textarea name="" id="" cols="6" class="form-control"
+                                            placeholder="Ingrese motivo" #motivoAdmin></textarea>
+                                        <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                            (click)="rechazarSolicitudAdministracion(motivoAdmin)">
+                                        <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                            (click)="btnCancelarRechazar()">
+                                    </div>
+
+                                    <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>

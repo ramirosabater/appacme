@@ -1,0 +1,142 @@
+<barra-superior></barra-superior>
+
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="container my-3">
+        <app-boton-atras></app-boton-atras>
+
+        <!-- SECCIÓN 1: CARD DE DESCRIPCIÓN DEL PUESTO -->
+
+        <div class="card mb-4 mt-3 ">
+            <div class="card-body g-3">
+                <div class="row">
+                    <div class="col-12">
+                        <p><strong>Descripción del puesto:</strong></p>
+                        <p class="text-muted">{{ this.oportunidad.descripcion }}</p>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>
+                                    <strong>Fecha de publicación:</strong>
+                                    {{ this.oportunidad.fecha_publicacion | date: 'dd/MM/yyyy' }}
+                                </p>
+                                <p><strong>Área:</strong> {{ this.oportunidad.area }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Modalidad:</strong> {{ this.oportunidad.modalidad }}</p>
+                                <p><strong>Ubicación:</strong> {{ this.oportunidad.ubicacion }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SECCIÓN 2: BOTÓN DE DESCARGA MASIVA Y CONTADOR -->
+        <div class="card mb-4" *ngIf="postulantes && postulantes.length > 0">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center">
+                        <button class="btn btn-primary btn-lg" (click)="descargarTodosLosCVs()">
+                            Descargar cvs
+                                <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <p><strong>Total de Postulantes</strong></p>
+                                <h2 class="text-primary">{{ postulantes?.length || 0 }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: LISTA DE POSTULANTES -->
+        <div class="card">
+            <div class="card-header">
+                <p class="mb-0"> <strong>Lista de Postulantes {{this.id_empleo}}</strong> </p>
+            </div>
+            <div class="card-body">
+                <div *ngIf="!postulantes || postulantes.length === 0" class="text-center py-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <i class="fa-solid fa-inbox fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">No hay postulantes registrados</h5>
+                            <p class="text-muted">Aún no se han recibido postulaciones para este empleo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngFor="let postulante of postulantes; let i = index">
+                    <div class="col-12 mb-3">
+                        <div class="card  border rounded-3">
+                            
+                                <!-- Sub-card: Información del postulante -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <strong>{{ postulante.nombre }} {{ postulante.apellido }}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <p class="card-text mb-1">
+                                                            <strong>Número de Postulante:</strong> {{
+                                                            postulante.id_postulante }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Email:</strong> {{ postulante.email }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Documento:</strong>
+                                                            {{ postulante.tipo_documento | uppercase }}
+                                                            {{ postulante.nro_documento }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Teléfono:</strong> {{ postulante.telefono }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p class="card-text mb-1">
+                                                            <strong>Género:</strong> {{ postulante.genero }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Localidad:</strong> {{ postulante.localidad }}
+                                                        </p>
+                                                        <p class="card-text mb-1">
+                                                            <strong>Fecha de postulación:</strong>
+                                                            {{ postulante.fecha_postulacion | date:'dd/MM/yyyy' }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 text-end">
+                                                <a *ngIf="postulante.curriculum_vitae"
+                                                    [href]="url + postulante.curriculum_vitae" target="_blank"
+                                                    class="btn btn-ligh">
+                                                     Ver CV
+                                                </a>
+                                                <button class="btn btn-ligh" *ngIf="!postulante.curriculum_vitae"
+                                                    disabled>
+                                                     Sin CV
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

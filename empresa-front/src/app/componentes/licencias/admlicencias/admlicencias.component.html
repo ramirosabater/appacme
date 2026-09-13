@@ -1,0 +1,84 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Licencias: Revision Lider
+                </h4>
+
+            </div>
+        </div>
+
+        <div *ngIf="licencias.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Licencias</h3>
+            <div *ngFor="let licencia of licencias" class="">
+                <div class="info p-2">
+                    <p>Nro Licencia: <b>000-{{licencia.id_licencia}}</b></p>
+                    <p>Solicitante: <b>{{licencia.nombre}} {{licencia.apellido}}</b></p>
+                    <p>Tipo Licencia: <b class="etiqueta-secondary">{{licencia.tipo_licencia_string}}</b></p>
+                    <p>Fecha Inicio: <b>{{licencia.fecha_inicio}}</b> Fecha Fin: <b>{{licencia.fecha_fin}}</b></p>
+                    <p>Fecha Reintegro: <b>{{licencia.fecha_reintegro}}</b></p>
+                    <p class="estado">Estado: <b
+                            class="etiqueta-{{licencia.estado_color}}">{{licencia.estado_string}}</b></p>
+                    <div class="boton">
+                        <a class="btn btn-light" [routerLink]="['/ver-licencia', licencia.id_licencia,1]">ver</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body animation_aparecer vista-monitor">
+            <table *ngIf="licencias.length > 0" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>Tipo Licencia</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Reintegro</th>
+                        <th>Estado</th>
+                        <!-- Acciones -->
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let licencia of licencias">
+                        <td>{{licencia.nombre}} {{licencia.apellido}}</td>
+                        <td>
+                            <p class="etiqueta-secondary">{{licencia.tipo_licencia_string}}</p>
+                        </td>
+                        <td>{{licencia.fecha_inicio}}</td>
+                        <td>{{licencia.fecha_fin}}</td>
+                        <td>{{licencia.fecha_reintegro}}</td>
+                        <td>
+                            <p class="etiqueta-{{licencia.estado_color}}">{{licencia.estado_string}} </p>
+                        </td>
+                        <!-- Acciones -->
+                        <td>
+                            <a class="btn btn-light btn-sm"
+                                [routerLink]="['/ver-licencia', licencia.id_licencia,1]">ver</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+        </div>
+
+        <div *ngIf="licencias.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay licencias para revisar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Las licencias se mostrarán aquí.
+            </div>
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,180 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Datos de la Licencia
+                </h4>
+            </div>
+        </div>
+
+        <!-- Datos de la licencia en una tabla: fecha_inicio, fecha_fin, fecha_reintegro, descripcio, tipo_licencia, revision_jefe, revision_recursos, estado, adjunto
+         -->
+
+
+        <div class="card-body animation_aparecer">
+            <p class="alert alert-{{estado}}">Esta licencia se encuentra {{licencia.estado_string}}</p>
+            <table class="table table-hovered">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Nro Licencia</th>
+                        <td>000-{{licencia.id_licencia}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Solicitante</th>
+                        <td>{{licencia.apellido}} {{licencia.nombre}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de solicitud</th>
+                        <td>{{licencia.fecha_creacion}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de inicio</th>
+                        <td>{{licencia.fecha_inicio}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de fin</th>
+                        <td>{{licencia.fecha_fin}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de reintegro</th>
+                        <td>{{licencia.fecha_reintegro}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cantidad de dias</th>
+                        <td>{{licencia.cantidad_dias}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tipo de licencia</th>
+                        <td>
+                            <p class="etiqueta-secondary">{{licencia.tipo_licencia_string}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descripción</th>
+                        <td>{{licencia.descripcion}}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Adjunto</th>
+                        <td *ngIf="licencia.adjunto != null">
+                            <a href="{{url}}{{licencia.adjunto}}" target="_blank" class="btn btn-sm btn-secondary">Ver
+                                adjunto</a>
+                        </td>
+                        <td *ngIf="licencia.adjunto == null">
+                            <p class="etiqueta-warning">No hay adjunto</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Revisión por parte del Lider</th>
+                        <td>
+                            <p *ngIf="licencia.revision_jefe != 0" class="etiqueta-{{licencia.revision_jefe_color}}">
+                                {{licencia.revision_jefe_string}}</p>
+                            <div class="" *ngIf="licencia.revision_jefe == 0">
+                                <div class="" *ngIf="user == 1">
+                                    <div class="" *ngIf="rechazar != 1">
+                                        <input *ngIf="!loading" type="button" value="Aprobar"
+                                            class="btn btn-sm btn-primary m-1" (click)="aprobarJefe()">
+                                        <input *ngIf="!loading" type="button" value="Rechazar"
+                                            class="btn btn-sm btn-light m-1" (click)="btnRechazar()">
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="" *ngIf="rechazar == 1">
+
+                                        <div *ngIf="!loading" class="">
+                                            <label for="">Motivo</label>
+
+                                            <textarea name="" id="" cols="6" class="form-control"
+                                                placeholder="Ingrese motivo" #motivoJefe></textarea>
+                                            <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                                (click)="rechazarJefe(motivoJefe)">
+                                            <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                                (click)="btnCancelarRechazar()">
+                                        </div>
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr *ngIf="licencia.revision_jefe == 2">
+                        <th>Motivo de rechazo por parte del lider</th>
+                        <td>
+                            <p class="alert alert-secondary">{{licencia.motivo_jefe}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Revisión por parte de recursos humanos</th>
+                        <td>
+                            <p *ngIf="licencia.revision_recursos != 0"
+                                class="etiqueta-{{licencia.revision_recursos_color}}">
+                                {{licencia.revision_recursos_string}}</p>
+                            <div class="" *ngIf="licencia.revision_recursos == 0">
+                                <div class="" *ngIf="user == 2">
+                                    <div class="" *ngIf="rechazar != 1">
+                                        <input *ngIf="!loading" type="button" value="Aprobar"
+                                            class="btn btn-sm btn-secondary m-1" (click)="aprobarRecursos()">
+                                        <input *ngIf="!loading" type="button" value="Rechazar"
+                                            class="btn btn-sm btn-light m-1" (click)="btnRechazar()">
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="" *ngIf="rechazar == 1">
+                                        <div *ngIf="!loading" class="">
+                                            <label for="">Motivo</label>
+                                            <textarea name="" id="" cols="6" class="form-control"
+                                                placeholder="Ingrese motivo" #motivoRecursos></textarea>
+                                            <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                                (click)="rechazarRecursos(motivoRecursos)">
+                                            <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                                (click)="btnCancelarRechazar()">
+                                        </div>
+                                        <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                            role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    <tr *ngIf="licencia.revision_recursos == 2">
+                        <th>Motivo de rechazo por parte de recursos humanos</th>
+                        <td>
+                            <p class="alert alert-secondary">{{licencia.motivo_recursos}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Estado</th>
+                        <td>
+                            <p class="alert alert-{{estado}}">{{licencia.estado_string}}</p>
+                        </td>
+                    </tr>
+
+            </table>
+
+
+        </div>
+
+    </div>

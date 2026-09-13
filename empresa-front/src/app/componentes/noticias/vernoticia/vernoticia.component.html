@@ -1,0 +1,30 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card animation_aparecer">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <h3><b>{{noticia.titulo}}</b></h3>
+            <h5>{{noticia.subtitulo}}</h5>
+        </div>
+        <div class="card-body">
+            <img src="{{ruta}}{{noticia.url}}" class="card-img-top mb-2" alt="...">
+            <h6 class="etiqueta-secondary">{{noticia.categoria}}</h6>
+            <p class="mb-2">{{noticia.cuerpo_noticia}}</p>
+            <h5>Hasta: {{noticia.fecha_vencimiento}}</h5>
+        </div>
+
+        <div *ngIf="noticiaImagenes.length > 0" class="card-footer">
+            <h4>Más imagenes</h4>
+            <div class="row p-2">
+                <div *ngFor="let imagen of noticiaImagenes" class="col-md-4 mb-2">
+                    <div class="card">
+                        <img src="{{ruta}}{{imagen.url}}" style="height: 150px;" class="card-img-top" alt="...">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>

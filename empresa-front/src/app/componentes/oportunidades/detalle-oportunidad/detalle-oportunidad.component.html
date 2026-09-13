@@ -1,0 +1,145 @@
+
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Datos de la Oportunidad de Empleo
+                </h4>
+            </div>
+            <div class="card-body animation_aparecer">
+              
+                <button class="btn btn-light" [routerLink]="['/lista-postulantes', oportunidad.id_empleo]">Lista de POstulantes</button>
+    
+    
+            </div>
+        </div>
+       
+
+    
+        <div class="card-body animation_aparecer">
+           
+            <table class="table table-hovered">
+                <thead>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Nro Oportunidad</th>
+                        <td>000-{{oportunidad.id_empleo}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Titulo</th>
+                        <td>{{oportunidad.titulo}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha de Publicacion</th>
+                        <td>{{oportunidad.fecha_publicacion | date:'yyyy-MM-dd HH:mm'}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Fecha fin de Publicación</th>
+                        <td>{{oportunidad.fecha_fin_publicacion | date:'yyyy-MM-dd HH:mm' }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descripción</th>
+                        <td>{{oportunidad.descripcion}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Area</th>
+                        <td>{{oportunidad.area}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Carga horaria</th>
+                        <td>{{oportunidad.carga_horaria}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modalidad</th>
+                        <td>
+                            <p class="etiqueta-secondary">{{oportunidad.modalidad}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Ubicación</th>
+                        <td>{{oportunidad.ubicacion}}</td>
+                    </tr>
+                   
+                    <tr>
+                        <th scope="row">Requisitos</th>
+                        <td>
+                            <div class="cards-container">
+                                <!-- Cards de requisitos existentes -->
+                                <div class="card loaded-card mb-1" *ngFor="let requisito of oportunidad.requisitos">
+                                    <div class="card-body py-2">
+                                        <p class="card-text">{{ requisito.requisito }}</p>
+                                        <div class="text-right mt-1">
+                                            <button class="btn btn-sm btn-outline-danger"
+                                                (click)="eliminarRequisito(requisito.id_requisito)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Formulario para nuevo requisito -->
+                                <div class="card add-card">
+                                    <div class="card-body">
+                                        <form #requisitoForm="ngForm" (ngSubmit)="addRequisito()">
+                                            <textarea class="form-control" [(ngModel)]="requisito" name="requisito"
+                                                placeholder="Nuevo requisito" rows="3" required></textarea>
+                                            <button type="submit" class="btn btn-light mt-2"
+                                                [disabled]="!requisitoForm.valid">
+                                                Agregar Requisito
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Beneficios</th>
+                        <td>
+                            <div class="cards-container">
+                                <!-- Cards de beneficios existentes -->
+                                <div class="card loaded-card mb-1" *ngFor="let beneficio of oportunidad.beneficios">
+                                    <div class="card-body py-2">
+                                        <p class="card-text">{{ beneficio.beneficio }}</p>
+                                        <div class="text-right mt-1">
+                                            <button class="btn btn-sm btn-outline-danger" (click)="eliminarBeneficio(beneficio.id_beneficio)">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Formulario para nuevo beneficio -->
+                                <div class="card add-card">
+                                    <div class="card-body">
+                                        <form #beneficioForm="ngForm" (ngSubmit)="addBeneficio()">
+                                            <textarea class="form-control" [(ngModel)]="beneficio" name="beneficio"
+                                                placeholder="Nuevo beneficio" rows="3" required></textarea>
+                                            <button type="submit" class="btn btn btn-light mt-2"
+                                                [disabled]="!beneficioForm.valid">
+                                                Agregar Beneficio
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            </table>
+
+
+        </div>
+
+
+
+    </div>

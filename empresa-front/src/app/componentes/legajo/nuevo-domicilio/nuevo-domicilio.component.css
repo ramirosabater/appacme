@@ -1,0 +1,41 @@
+.contenedor {
+    display: flex;
+}
+
+.card{
+    width: 100%;
+    margin: 2% 2% 10% 2%;
+    overflow-y: auto;
+    
+}
+
+.card .row{
+    display: flex;
+    align-items: flex-start;
+    padding: 0px;
+    margin: 0px;
+    
+}
+
+.form-label{
+    margin-right: 1em;
+}
+
+select{
+    width: 100%;
+}
+
+
+@media (max-width:950px) {
+    .card{
+        width: 100%;
+        margin: 0px;
+        overflow-x: auto;}
+.domicilio{
+    padding: 5px 10px;
+    border-left: 4px solid #ccc;
+}
+
+p{
+    font-size: 1.0em;
+}}

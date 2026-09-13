@@ -1,0 +1,46 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-newspaper"></i> Noticias 
+                </h4>
+            </div>
+
+        </div>
+
+        <div *ngIf="noticias.length > 0" class="card-body animation_aparecer">
+            <div class="row">
+                <div class="col-md-6" *ngFor="let noticia of noticias">
+                    <div class="card mb-2 animation_aparecer">
+                        <div class="card-header" id="card-titulo">
+                            <h3><b>{{noticia.titulo}}</b></h3>
+                        </div>
+                        <!-- agregar la imagen de la noticia-->
+                        <img src="{{url}}{{noticia.url}}" class="card-img-top" alt="...">
+                        <div class="card-body" id="card-subtitulo">
+                            <p>{{noticia.subtitulo}}</p><br>
+                            <h5 class="etiqueta-secondary">{{noticia.categoria}}</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a [routerLink]="['/ver-noticia', noticia.id_noticia]" class="btn btn-light">Ver
+                                mas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="noticias.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay noticias para mostrar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Aqui se mostraran las noticias que se publiquen
+            </div>
+        </div>
+    </div>
+</div>

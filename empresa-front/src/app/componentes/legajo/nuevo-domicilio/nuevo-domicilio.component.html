@@ -1,0 +1,99 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-address-book"></i> Nuevo domicilio
+                </h4>
+
+            </div>
+        </div>
+        <div class="card-body animation_aparecer">
+
+            <form #formFeriado="ngForm" (ngSubmit)="guardarDomicilio(formFeriado)">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Calle</label>
+                            <input type="text" class="form-control" name="calle" aria-describedby=""
+                                placeholder="Ingrese calle" [(ngModel)]="domicilio.calle" #calle="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Numero</label>
+                            <input type="text" class="form-control" name="numero" aria-describedby=""
+                                placeholder="Ingrese numero" [(ngModel)]="domicilio.numero" #numero="ngModel" required>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Localidad</label>
+                            <input type="text" class="form-control" name="localidad" aria-describedby=""
+                                placeholder="Ingrese localidad" [(ngModel)]="domicilio.localidad" #localidad="ngModel"
+                                required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Provincia</label>
+                            <input type="text" class="form-control" name="provincia" aria-describedby=""
+                                placeholder="Ingrese provincia" [(ngModel)]="domicilio.provincia" #provincia="ngModel"
+                                required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Observaciones</label>
+                            <input type="text" class="form-control" name="observaciones" aria-describedby=""
+                                placeholder="Ingrese observaciones" [(ngModel)]="domicilio.observaciones"
+                                #observaciones="ngModel" required>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <!--Agregar un select con los tipos de domicilio 1 Laboral, 2 Casa, 3 otros-->
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Tipo de domicilio</label>
+                            <select class="form-select pl-1" name="tipo_direccion" aria-label="Default select example"
+                                [(ngModel)]="domicilio.tipo_direccion" #tipo_direccion="ngModel" required>
+                                <option value="0">Seleccione un tipo de domicilio</option>
+                                <option selected value="1">Trabajo</option>
+                                <option value="2">Casa</option>
+                                <option value="3">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Foto frente casa</label>
+                            <input type="file" class="form-control" name="archivo_adjunto" aria-describedby=""
+                                placeholder="Ingrese un archivo adjunto" (change)="onFileChange($event)">
+                        </div>
+                    </div>
+                </div>
+                <p class="etiqueta-secondary m-2">
+                    Todos los campos son obligatorios
+                </p>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-light m-2">Guardar</button>
+                        <input type="button" class="btn btn-light m-2" value="Cancelar" (click)="cancelar()">
+                    </div>
+                </div>
+
+            </form>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card animation_aparecer">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-days"></i> Administrador de feriados
+                </h4>
+            </div>
+
+            <div *ngIf="isAdminFeriados" class="nueva">
+                <button class="btn btn-light" [routerLink]="['/nuevo-feriado']">Nuevo feriado</button>
+            </div>
+
+        </div>
+
+        <div class="card-body">
+            <p *ngIf="proximoFeriado" class="alert alert-success">Proximo feriado: {{proximoFeriado.fecha_feriado}}
+                {{proximoFeriado.descripcion}}</p>
+            <!-- Listado de feriados id, fecha, descripcion-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="mb-3">
+                        <table *ngIf="feriados.length > 0" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Descripcion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let feriado of feriados">
+                                    <td>{{feriado.fecha_feriado}}</td>
+                                    <td>{{feriado.descripcion}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div *ngIf="feriados.length == 0" class="col-md-12">
+                            <div class="mb-3 text-center">
+                                <div class="mb-3 text-center">
+                                    <h4>No hay feriados para mostrar</h4>
+                                </div>
+                                <div class="etiqueta-secondary" role="alert">
+                                    Los feriados se mostraran aqui
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>

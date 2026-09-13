@@ -1,0 +1,75 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-user-group"></i> Administrador de Usuarios
+                </h4>
+
+            </div>
+            <button class="btn btn-light m-2" (click)="newUser()">Nuevo usuario</button>
+
+
+        </div>
+
+        <div *ngIf="users.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Usuarios</h3>
+            <div *ngFor="let user of users" class="">
+                <div class="info p-2">
+                    <p>Nro Usuario: <b>000-{{user.id_usuario}}</b></p>
+                    <p>Nombre: <b>{{user.nombre}}</b> Apellido <b>{{user.apellido}}</b></p>
+                    <p>DNI: <b>{{user.dni}}</b></p>
+                    <p class="estado">Estado: <b class="etiqueta-{{user.colorestado}}">{{user.estado}}</b></p>
+                    <div class="boton">
+                        <a class="btn btn-light" [routerLink]="['/edit-user', user.id_usuario, 1]">ver</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="users.length > 0" class="card-body animation_aparecer vista-monitor">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>DNI</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.apellido}}</td>
+                        <td>{{user.nombre}}</td>
+                        <td>{{user.dni}}</td>
+                        <td>
+                            <p class="etiqueta-{{user.colorestado}}">{{user.estado}}</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-light m-2"
+                                [routerLink]="['/edit-user', user.id_usuario, 1]">ver</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="users.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay usuarios para mostrar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Cree un usuario para comenzar
+            </div>
+        </div>
+
+
+    </div>
+</div>

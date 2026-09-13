@@ -1,0 +1,38 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Historial de la solicitud
+                </h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="historial">
+                <p>Nro Solicitud: <b>000-002</b></p>
+                <p>Fecha: <b>10/10/2024</b></p>
+                <p>Empleado: <b>Fernando Omar Paez</b></p>
+                <p class="etiqueta-success">Estado: <b>Aprobado</b></p>
+                <p>Motivo: <b><i>sin motivo</i></b></p>
+            </div>
+            <div class="historial">
+                <p>Nro Solicitud: <b>000-002</b></p>
+                <p>Fecha: <b>08/10/2024</b></p>
+                <p>Empleado: <b>Nombre de empleado</b></p>
+                <p class="etiqueta-danger">Estado: <b>Rechazado</b></p>
+                <p>Motivo: <b><i>No se aprueba la solicitud porque no cumple con las fechas establecidas</i></b></p>
+            </div>
+            <div class="historial">
+                <p>Nro Solicitud: <b>000-002</b></p>
+                <p>Fecha: <b>02/10/2024</b></p>
+                <p>Empleado: <b>Cristian Hernan Ceballos</b></p>
+                <p class="etiqueta-secondary">Estado: <b>Pendiente</b></p>
+                <p>Motivo: <b><i>sin motivo</i></b></p>
+            </div>
+        </div>
+    </div>
+</div>

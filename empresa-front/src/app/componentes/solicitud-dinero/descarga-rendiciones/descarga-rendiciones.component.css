@@ -1,0 +1,94 @@
+.contenedor {
+    display: flex;
+    border: none;
+}
+
+.card {
+    width: 90%;
+    margin: 2% 2% 10% 2%;
+    overflow-y: auto;
+    border: none;
+}
+
+.vista-responsive {
+    display: none;
+    padding: 4px 8px;
+}
+
+.vista-monitor {
+    display: block;
+}
+
+.info {
+    padding: 4px 6px;
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    box-shadow: 1px 2px 5px 0px rgba(186, 186, 186, 0.75);
+    -webkit-box-shadow: 1px 2px 5px 0px rgba(186, 186, 186, 0.75);
+    -moz-box-shadow: 1px 2px 5px 0px rgba(186, 186, 186, 0.75);
+}
+
+.info p {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.info .estado {
+    text-align: left;
+}
+
+.info .boton {
+    text-align: right;
+}
+
+.info .boton a {
+    margin-top: 1em;
+    padding: 0px 15px;
+}
+
+.descargas{
+    padding: 5px;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 5px;
+    margin: 10px;
+}
+.descargas h4{
+    margin: 0;
+    padding: 0px;
+    margin-bottom: 5px;
+
+}
+
+.descargas .fechas{
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.descargas .fechas input{
+    margin-right: 10px;
+}
+
+.descargas select{
+    margin-right: 10px;
+    padding: 3px 12px;
+}
+
+
+@media (max-width:950px) {
+    .card {
+        width: 100%;
+        margin: 0px;
+        overflow-x: auto;
+    }
+
+    .vista-monitor {
+        display: none;
+    }
+
+    .vista-responsive {
+        display: block;
+        padding: 4px 10px;
+    }
+}

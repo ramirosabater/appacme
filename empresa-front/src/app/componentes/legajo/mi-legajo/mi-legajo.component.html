@@ -1,0 +1,193 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <app-boton-atras *ngIf="vistaLegajo != 0"></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-address-book"></i> Legajo
+                </h4>
+
+            </div>
+        </div>
+
+
+        <div class="card-body animation_aparecer">
+            <p *ngIf="user.id_estado != 1" class="alert alert-danger animation_aparecer">Este usuario se encuentra
+                desactivado</p>
+            <div class="card-header">
+                <h3>Datos personales</h3>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <p>Nombre: <b>{{user.nombre}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Apellido: <b>{{user.apellido}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>DNI: <b>{{user.dni}}</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Correo electronico: <b>{{user.email}}</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Telefono: <b>{{user.telefono}}</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h3>Datos laborales</h3>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Empresa: <b>{{empleado.nombre_empresa}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Legajo: <b>{{empleado.n_legajo}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Sector: <b>{{empleado.sector}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Posicion: <b>{{empleado.cargo}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Lider: <b>{{jefe.apellido}} {{jefe.nombre}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Dias de vacaciones: <b>{{empleado.dias_vacaciones}}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>Dias de vacaciones restantes: <b>{{empleado.dias_restantes}}</b></p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-header">
+                <h3>Domicilios registrados</h3>
+            </div>
+            <div class="card-body">
+                <div *ngIf="domicilios.length == 0" class="">
+                    <p class="alert alert-secondary">No hay domicilios registrados</p>
+                </div>
+                <div class="">
+                    <a *ngIf="isMyLegajo == 0" class="btn btn-sm btn-primary mb-2"
+                        [routerLink]="['/nuevo-domicilio', user.id_usuario]">Nuevo
+                        domicilio
+                    </a>
+                    <div class="row">
+                        <div *ngFor="let domicilio of domicilios" class="row mb-4 domicilio">
+                            <div class="col-md-9">
+                                <p>Fecha actualizacion: <b>{{domicilio.fecha_actualizacion}}</b></p>
+                                <p>Calle: <b>{{domicilio.calle}}</b> Numero: <b>{{domicilio.numero}}</b> Localidad:
+                                    <b>{{domicilio.localidad}}</b> Provincia: <b>{{domicilio.provincia}}</b>
+                                </p>
+                                <p>Observaciones: <b>{{domicilio.observaciones}}</b></p>
+                                <p>Tipo domicilio: <b class="etiqueta-secondary">{{domicilio.descripcion}}</b></p>
+
+                            </div>
+                            <div class="col-md-3 m-2">
+                                <img src="{{ruta}}{{domicilio.url_frente_domicilio}}" alt="" width="100px">
+                                <a href="{{ruta}}{{domicilio.url_frente_domicilio}}"
+                                    class="btn btn-sm btn-secondary m-2" target="_blank">Ver</a>
+                            </div>
+                            <div class="row">
+                                <input *ngIf="isMyLegajo == 0" type="button" value="Eliminar"
+                                    class="btn btn-sm btn-danger m-2"
+                                    (click)="bajaDomicilio(domicilio.id_direccion)">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header">
+                <h3>Fotos DNI</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-1 p-1">
+                        <div class="card p-1">
+                            <div *ngIf="dniFrente.id_adjunto == 0 && isMyLegajo == 0" class="p-1">
+                                <h4>Foto Frente</h4>
+                                <input type="file" class="form-control mb-1" name="archivo_adjunto" aria-describedby=""
+                                    placeholder="Ingrese un archivo adjunto" (change)="onFileChangeFrente($event)">
+                                <input type="button" value="Cargar" class="btn btn-sm btn-secondary"
+                                    (click)="createAdjuntoDNI(1)">
+                            </div>
+
+                            <div *ngIf="dniFrente.id_adjunto == 0 && isMyLegajo != 0" class="p-1">
+                                <h4>Foto Frente</h4>
+                                <p>No se cargo ningun archivo</p>
+                            </div>
+
+                            <div *ngIf="dniFrente.id_adjunto != 0" class="p-1">
+                                <h4>Foto Frente</h4>
+
+                                <div class="mb-1">
+                                    <img src="{{ruta}}{{dniFrente.url_adj}}" alt="" width="100%" height="100px"
+                                        class="mb-1" style="object-fit: cover;">
+                                    <a href="{{ruta}}{{dniFrente.url_adj}}" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-sm btn-primary">Descargar</a>
+                                </div>
+                                <p class="etiqueta-success">Cargado correctamente</p><br>
+
+                                <input *ngIf="isMyLegajo == 0" type="button" value="Eliminar"
+                                    class="btn btn-sm btn-secondary mt-1" (click)="bajaAdjunto(dniFrente.id_adjunto)">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 mb-1 p-1">
+                        <div class="card p-1">
+                            <div *ngIf="dniDorso.id_adjunto == 0 && isMyLegajo == 0" class=" p-1">
+                                <h4>Foto Dorso</h4>
+                                <input type="file" class="form-control mb-1" name="archivo_adjunto" aria-describedby=""
+                                    placeholder="Ingrese un archivo adjunto" (change)="onFileChangeDorso($event)">
+                                <input type="button" value="Cargar" class="btn btn-sm btn-secondary"
+                                    (click)="createAdjuntoDNI(2)">
+                            </div>
+
+                            <div *ngIf="dniDorso.id_adjunto == 0 && isMyLegajo != 0" class=" p-1">
+                                <h4>Foto Dorso</h4>
+                                <p>No se cargo ningun archivo</p>
+                            </div>
+
+                            <div *ngIf="dniDorso.id_adjunto != 0" class="p-1">
+                                <h4>Foto Dorso</h4>
+
+                                <div class="mb-1">
+                                    <img src="{{ruta}}{{dniDorso.url_adj}}" alt="" width="100%" height="100px"
+                                        class="mb-1" style="object-fit: cover;">
+                                    <a href="{{ruta}}{{dniDorso.url_adj}}" target="_blank" rel="noopener noreferrer"
+                                        class="btn btn-sm btn-primary">Descargar</a>
+                                </div>
+                                <p class="etiqueta-success">Cargado correctamente</p><br>
+                                <input *ngIf="isMyLegajo == 0" type="button" value="Eliminar"
+                                    class="btn btn-sm btn-secondary mt-1" (click)="bajaAdjunto(dniDorso.id_adjunto)">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <p class="etiqueta-secondary">
+                    <b>Nota:</b> Las fotos del DNI deben ser cargadas en formato JPG, PNG o JPEG. El tamaño maximo de
+                    cada foto es de 10MB.
+                </p>
+            </div>
+
+
+        </div>
+    </div>

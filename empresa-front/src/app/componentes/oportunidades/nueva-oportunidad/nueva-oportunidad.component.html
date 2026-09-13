@@ -1,0 +1,124 @@
+<barra-superior></barra-superior>
+
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header ">
+                <h4>Formulario de Oportunidad Laboral</h4>
+            </div>
+            <div class="card-body">
+                <form #oportunidadForm="ngForm" (ngSubmit)="guardarOportunidad(oportunidadForm)">
+                    <!-- Sección 1: Información Básica -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="titulo" class="form-label">Título del puesto</label>
+                                <input type="text" class="form-control" id="titulo" [(ngModel)]="oportunidad.titulo"
+                                    name="titulo" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="estado" class="form-label">Estado</label>
+                                <select class="form-select" id="estado" [(ngModel)]="oportunidad.estado" name="estado"
+                                    required>
+                                    <option *ngFor="let estado of estados" [value]="estado.estado">{{estado.estado}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 2: Fechas -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_creacion" class="form-label">Fecha de creación</label>
+                                <input type="date" class="form-control" id="fecha_creacion"
+                                    [(ngModel)]="oportunidad.fecha_creacion" name="fecha_creacion" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_publicacion" class="form-label">Fecha de publicación</label>
+                                <input type="date" class="form-control" id="fecha_publicacion"
+                                    [(ngModel)]="oportunidad.fecha_publicacion" name="fecha_publicacion" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="fecha_fin_publicacion" class="form-label">Fecha fin de publicación</label>
+                                <input type="date" class="form-control" id="fecha_fin_publicacion"
+                                    [(ngModel)]="oportunidad.fecha_fin_publicacion" name="fecha_fin_publicacion"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección 3: Descripción -->
+                    <div class="mb-4">
+                        <div class="form-group">
+                            <label for="descripcion" class="form-label">Descripción del puesto</label>
+                            <textarea class="form-control" id="descripcion" rows="4"
+                                [(ngModel)]="oportunidad.descripcion" name="descripcion" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Sección 4: Selectores -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="carga_horaria" class="form-label">Carga horaria</label>
+                                <select class="form-select" id="carga_horaria"
+                                    [(ngModel)]="oportunidad.id_carga_horaria" name="id_carga_horaria" required>
+                                    <option *ngFor="let carga of cargasHorarias" [value]="carga.id_carga_horaria">{{carga.carga_horaria}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="modalidad" class="form-label">Modalidad</label>
+                                <select class="form-select" id="modalidad" [(ngModel)]="oportunidad.id_modalidad"
+                                    name="id_modalidad" required>
+                                    <option *ngFor="let modalidad of modalidades" [value]="modalidad.id_modalidad">
+                                        {{modalidad.modalidad}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ubicacion" class="form-label">Ubicación</label>
+                                <select class="form-select" id="ubicacion" [(ngModel)]="oportunidad.id_ubicacion"
+                                    name="id_ubicacion" required>
+                                    <option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion.id_ubicacion">
+                                        {{ubicacion.ubicacion}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="area" class="form-label">Área</label>
+                                <select class="form-select" id="area" [(ngModel)]="oportunidad.id_area" name="id_area"
+                                    required>
+                                    <option *ngFor="let area of areas" [value]="area.id_area">{{area.area}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Botones de acción -->
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="button" class="btn btn-secondary me-2" (click)="cancelar()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="!oportunidadForm.valid">
+                            Guardar Oportunidad
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

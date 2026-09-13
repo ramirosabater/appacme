@@ -1,0 +1,70 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-user-group"></i> Listado de Legajos
+                </h4>
+
+            </div>
+
+        </div>
+
+        <div *ngIf="users.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Usuarios</h3>
+            <div *ngFor="let user of users" class="">
+                <div class="info p-2">
+                    <p>Nro Usuario: <b>000-{{user.id_empleado}}</b></p>
+                    <p>Nombre: <b>{{user.nombre}}</b> Apellido <b>{{user.apellido}}</b></p>
+                    <p>Legajo: <b>{{user.n_legajo}}</b></p>
+                    <p class="estado">Estado: <b class="etiqueta-{{user.color_estado}}">{{user.estado}}</b></p>
+                    <div class="boton">
+                        <a class="btn btn-light" [routerLink]="['/legajo',1, user.id_empleado]">ver</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="users.length > 0" class="card-body animation_aparecer vista-monitor">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Apellido</th>
+                        <th>Nombre</th>
+                        <th>Legajo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.apellido}}</td>
+                        <td>{{user.nombre}}</td>
+                        <td>{{user.n_legajo}}</td>
+                        <td>
+                            <p class="etiqueta-{{user.color_estado}}">{{user.estado}}</p>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-light m-2"
+                                [routerLink]="['/legajo',1, user.id_empleado]">ver</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="users.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay empleados para mostrar</h4>
+            </div>
+        </div>
+
+
+    </div>
+</div>

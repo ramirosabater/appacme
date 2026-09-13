@@ -1,0 +1,25 @@
+.contenedor {
+    display: flex;
+}
+
+
+.card{
+    width: 90%;
+    margin: 2% 2% 10% 2%;
+    overflow-y: auto;
+    
+}
+
+.detalle-pedido{
+    padding: 10px;
+    border: 1px solid rgb(235, 235, 235);
+    border-radius: 5px;
+}
+
+
+@media (max-width:950px) {
+    .card{
+        width: 100%;
+        margin: 0px;
+        overflow-x: auto;}
+}

@@ -1,0 +1,79 @@
+.col1 .logo {
+    height: auto;
+    width: 300px;
+    align-items: center;
+}
+
+.fondo-login {
+    height: 100vh;
+    background-image: linear-gradient(to right bottom, #252525, #434444, #646565, #868888, #abadac, #b2bfb5, #bdd0bb, #cee0bd, #cedd9d, #d7d779, #e7cd53, #fcc02a);
+
+    padding-right: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10em;
+}
+
+.conteinerLogin {
+    margin-right: 2em;
+    align-items: center;
+    
+}
+
+#tarjetaLogin {
+    width: 350px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    background-color: #FFF8F0;
+
+}
+
+.card-body.p-2 {
+
+    margin-top: 3em;
+    gap: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 90%;
+}
+
+input{
+    background-color: whitesmoke;
+}
+
+
+@media (max-width:950px) {
+
+    .fondo-login {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-content: center;
+        align-items: center;
+        gap: 1em;
+    
+    }
+
+    .conteinerLogin {
+        margin-right: 0em;
+        align-items: center;
+    }
+
+    .fondo-login {
+        padding-right: 0%;
+    }
+
+    .col1 .logo {
+        margin-top: 1em;
+    }
+
+    #tarjetaLogin {
+        width: 350px;
+        max-height: 370px;
+}
+}

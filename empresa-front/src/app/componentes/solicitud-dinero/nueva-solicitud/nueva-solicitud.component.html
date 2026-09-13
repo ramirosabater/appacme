@@ -1,0 +1,119 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Nueva solicitud de dinero
+                </h4>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="secciones">
+                <div class="p-2 card">
+                    <form action="">
+                        <div class="mb-4">
+                            <p>Fecha de solicitud: <b>{{getFechaActual()}}</b></p>
+                            <p>Solicitante: <b>{{loginService.data.user.nombre}} {{loginService.data.user.apellido}}</b></p>
+                            <p>Tipo Solicitud: <b class="etiqueta-secondary">{{tipoSolicitudString}}</b></p>
+                        </div>
+                        <div class="mb-4" *ngIf="tipoSolicitud == 1">
+                            <label for="">Categoria</label>
+                            <select #subtipo name="" id="" class="form-control" (input)="onSubTipoChange(subtipo.value)">
+                                <option value="0">Solicitud</option>
+                                <option value="1">Rendición</option>
+                            </select>
+                        </div>
+                        <div class="mb-4" *ngIf="tipoSolicitud == 1">
+                            <label for="">Monto Solicitado ($)</label>
+                            <input #monto (input)="onMontoChange(monto.value)" type="number" placeholder="Ingrese monto"
+                                class="form-control">
+                            <i *ngIf="subTipo == 0">Monto maximo: $<b>{{cajaChica.valor}}</b></i>
+                        </div>
+
+                        <div class="mb-4" *ngIf="tipoSolicitud == 3">
+                            <label for="">Cantidad de dias</label>
+                            <input #dias (input)="onDiasChange(dias.value)" type="number" value="0" class="form-control"
+                                value="0">
+                            <i>Monto por dia: $<b>{{viaticos.valor}}</b></i>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="">Motivo solicitud</label>
+                            <textarea #motivo (input)="onMotivoChange(motivo.value)" name="" id="" rows="2"
+                                class="form-control" placeholder="Ingrese motivo"></textarea>
+                        </div>
+                    </form>
+                    <div class="form-items p-1" *ngIf="tipoSolicitud == 2">
+                        <h3>Seleccione items para agregar a la lista</h3>
+                        <form action="" class=" p-2">
+                            <div class="">
+                                <label for="">Categorias</label>
+                                <select name="" id="" class="form-control" #categoria>
+                                    <option value="0">Seleccione un tipo</option>
+                                    <option *ngFor="let categoria of categoriasPedido"
+                                        value="{{categoria.id_categoria_pedido}}">{{categoria.descripcion_categoria}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="">
+                                <input type="number" placeholder="Ingrese monto" class="form-control" #montoItem>
+                            </div>
+                            <div class="">
+                                <textarea name="" id="" rows="2" placeholder="Ingrese Observaciones"
+                                    class="form-control" #observaciones></textarea>
+                            </div>
+                            <div class="">
+                                <input type="button" value="Agregar" class="btn btn-sm btn-secondary m-2"
+                                    (click)="agregarItem(categoria, montoItem, observaciones)">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="card p-2">
+                    <h4>Resumen</h4>
+                    <table *ngIf="items.length != 0" class="table">
+                        <thead>
+                            <tr>
+                                <td>Categoria</td>
+                                <td>Importe</td>
+                                <td>Observaciones</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of items; let i = index">
+                                <td>{{item.descripcion_categoria}}</td>
+                                <td>{{item.importe}}</td>
+                                <td>{{item.observaciones}}</td>
+                                <td (click)="quitarItem(i)">x</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="items.length == 0 && tipoSolicitud == 2" class="">
+                        <p class="alert alert-warning">No se agregaron items a la lista</p>
+                    </div>
+                    <p *ngIf="tipoSolicitud == 3">Cantidad de dias: <b>{{dias}}</b></p>
+                    <p *ngIf="tipoSolicitud == 2">Cantidad de items: <b>{{items.length}}</b></p>
+                    <h3>Monto total solicitado: <b>${{monto}}</b></h3>
+                    <div *ngIf="!loading">
+                        <input (click)="createSolicitud()" type="button" value="Solicitar" class="btn btn-warning m-2">
+                    </div>
+                    <div *ngIf="loading" class="">
+                        <p>
+                            <b>Guardando solicitud... Por favor no salga de esta pagina.</b>
+                        </p>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <p *ngIf="tipoSolicitud != 4"><i>*Solicitud sujeta a aprobacion</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

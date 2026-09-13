@@ -1,0 +1,24 @@
+.contenedor {
+    display: flex;
+    
+
+    width: 90%;
+}
+
+.card {
+    margin:8% 5% 10% 5%;
+}
+
+
+@media (max-width:950px) {
+
+    .contenedor {
+        width: 100%;
+        justify-content: center;
+        
+       
+
+    }
+
+   
+}

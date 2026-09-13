@@ -1,0 +1,162 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-calendar-days"></i> Vacaciones Todas
+                </h4>
+
+            </div>
+
+            <!--Filtro horizontal Apellido, Sector (select), Estado (select)-->
+
+
+        </div>
+
+        <div class="card p-2 m-2">
+            <h4 class="m-0 pb-2">Filtros de busqueda de vacaciones</h4>
+            <div class="mb-2">
+                <input type="button" value="Listado" class="mr-2 btn btn-sm" (click)="cambiarFiltro(0)"
+                    [ngClass]="{'': banderaListadoSolicitudes, 'btn-warning': !banderaListadoSolicitudes}">
+                <input type="button" value="Solicitudes" class="btn btn-sm" (click)="cambiarFiltro(1)"
+                    [ngClass]="{'btn-warning': banderaListadoSolicitudes, '': !banderaListadoSolicitudes}">
+            </div>
+            <div *ngIf="banderaListadoSolicitudes" class="row">
+                <div class="col-md-3"
+                    [ngClass]="{'': banderaListadoSolicitudes, 'd-lg-none': !banderaListadoSolicitudes}">
+                    <label for="apellido">Apellido</label>
+                    <p></p>
+                    <input type="text" class="p-2" placeholder="Apellido" #apellido>
+                </div>
+                <div class="col-md-3">
+                    <label for="sector">Sector</label>
+                    <p></p>
+                    <select class="p-2" #sector>
+                        <option value="0">Todos</option>
+                        <option *ngFor="let sector of sectores" value="{{sector.id_sector}}">
+                            {{sector.descripcion}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3"
+                    [ngClass]="{'': banderaListadoSolicitudes, 'd-lg-none': !banderaListadoSolicitudes}">
+                    <label for="estado">Estado</label>
+                    <p></p>
+                    <select class="p-2" #estado>
+                        <option value="">Todos</option>
+                        <option *ngFor="let estado of estados" value="{{estado.estado}}">
+                            {{estado.descripcion}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3" id="button">
+                    <button class="btn btn-primary btn-sm"
+                        (click)="filtrarVacaciones(apellido, sector, estado)">Buscar</button>
+                    <button class="btn btn-primary btn-sm" (click)="limpiarFiltros()" id="btn-limpiar">Limpiar</button>
+                </div>
+            </div>
+            <div *ngIf="!banderaListadoSolicitudes" class="row">
+                <div class="col-md-3">
+                    <label for="sector">Sector</label>
+                    <p></p>
+                    <select class="p-2" #sector>
+                        <option value="0">Todos</option>
+                        <option *ngFor="let sector of sectores" value="{{sector.id_sector}}">
+                            {{sector.descripcion}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-3" id="button">
+                    <button class="btn btn-primary btn-sm"
+                        (click)="filtrarVacaciones('', sector, '')">Buscar</button>
+                    <button class="btn btn-primary btn-sm" (click)="limpiarFiltros()" id="btn-limpiar">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="vacaciones.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Vacaciones</h3>
+            <div *ngFor="let vacacion of vacaciones" class="">
+                <div *ngIf="banderaListadoSolicitudes" class="info p-2">
+                    <p>Nro Vacaciones: <b>000-{{vacacion.id_vacaciones}}</b></p>
+                    <p>Solicitante: <b>{{vacacion.nombre}} {{vacacion.apellido}}</b></p>
+                    <p>Sector: <b class="etiqueta-secondary">{{vacacion.descripcion}}</b></p>
+                    <p>Fecha Inicio: <b>{{vacacion.fecha_inicio}}</b> Fecha Fin: <b>{{vacacion.fecha_fin}}</b></p>
+                    <p>Fecha Reintegro: <b>{{vacacion.fecha_reintegro}}</b></p>
+                    <p>Cantidad de dias: <b>{{vacacion.cantidad_dias}}</b></p>
+                    <p class="estado">Estado: <b
+                            class="etiqueta-{{vacacion.estado_color}}">{{vacacion.estado_string}}</b></p>
+                    <div class="boton">
+                        <a class="btn btn-light" [routerLink]="['/ver-vacacion', vacacion.id_vacaciones,0]">ver</a>
+                    </div>
+
+                </div>
+
+                <div *ngIf="!banderaListadoSolicitudes" class="info p-2">
+                    <p>Solicitante: <b>{{vacacion.nombre}} {{vacacion.apellido}}</b></p>
+                    <p>Sector: <b class="etiqueta-secondary">{{vacacion.descripcion}}</b></p>
+                    <p>Dias vacaciones<b class="etiqueta-secondary">{{vacacion.dias_vacaciones}}</b></p>
+                    <p>Dias restantes<b class="etiqueta-secondary">{{vacacion.dias_restantes}}</b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body vista-monitor">
+            <table *ngIf="vacaciones.length > 0" class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>Solicitante</th>
+                        <th>Sector</th>
+                        <th *ngIf="banderaListadoSolicitudes">Fecha Inicio</th>
+                        <th *ngIf="banderaListadoSolicitudes">Fecha Fin</th>
+                        <th *ngIf="banderaListadoSolicitudes">Fecha Reintegro</th>
+                        <th *ngIf="banderaListadoSolicitudes">Dias Solicitados</th>
+                        <th *ngIf="banderaListadoSolicitudes">Estado</th>
+                        <th *ngIf="banderaListadoSolicitudes">Acciones</th>
+                        <th *ngIf="!banderaListadoSolicitudes">Cantidad dias</th>
+                        <th *ngIf="!banderaListadoSolicitudes">Dias restantes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vacacion of vacaciones">
+                        <td>{{vacacion.nombre}} {{vacacion.apellido}}</td>
+                        <td>
+                            <p class="etiqueta-secondary">{{vacacion.descripcion}}</p>
+                        </td>
+                        <td *ngIf="banderaListadoSolicitudes">{{vacacion.fecha_inicio}}</td>
+                        <td *ngIf="banderaListadoSolicitudes">{{vacacion.fecha_fin}}</td>
+                        <td *ngIf="banderaListadoSolicitudes">{{vacacion.fecha_reintegro}}</td>
+                        <td *ngIf="banderaListadoSolicitudes">
+                            <p class="etiqueta-secondary">{{vacacion.cantidad_dias}}</p>
+                        </td>
+                        <td *ngIf="banderaListadoSolicitudes">
+                            <p class="etiqueta-{{vacacion.estado_color}}">{{vacacion.estado_string}} </p>
+                        </td>
+                        <td *ngIf="banderaListadoSolicitudes">
+                            <a class="btn btn-light btn-sm"
+                                [routerLink]="['/ver-vacacion', vacacion.id_vacaciones,0]">ver</a>
+                        </td>
+                        <td *ngIf="!banderaListadoSolicitudes">
+                            <p class="etiqueta-secondary">{{vacacion.dias_vacaciones}}</p>
+                        </td>
+                        <td *ngIf="!banderaListadoSolicitudes">
+                            <p class="etiqueta-secondary">{{vacacion.dias_restantes}}</p>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+
+        <div *ngIf="vacaciones.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay vacaciones para mostrar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Utilice los filtros para buscar vacaciones
+            </div>
+        </div>
+
+    </div>
+</div>

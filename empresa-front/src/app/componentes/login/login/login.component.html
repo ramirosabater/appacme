@@ -1,0 +1,38 @@
+<div class="fondo-login">
+    <div class="col1">        <div class="logo"><img src="assets/logo-acme.png" class="card-img-top  p-2" alt="Logo"></div></div>
+    <div class="containerLogin">
+
+        <div class="tarjetaLogin mt-2">
+
+            <div class="card m-auto mt-2 tarjetaLogeo" id="tarjetaLogin" style="max-width: 300px;">
+
+                
+
+                <div class="card-body p-2">
+                    <h4 class="card-title mt-2">Ingreso al sistema</h4>
+                    <form #formlogin="ngForm" (ngSubmit)="login(formlogin)">
+                        <div class="mb-1">
+                            <label for="" class="form-label"><b>Nombre de usuario</b></label>
+                            <input type="text" class="form-control" id="user" name="dni" placeholder="Ingrese su usuario" [(ngModel)]=user.dni>
+                        </div>
+                        <div class="mb-2">
+                            <label for="" class="form-label"><b>Contraseña</b></label>
+                            <input type="password" class="form-control" id="pass" name="password" placeholder="Ingrese su contraseña"
+                                [(ngModel)]=user.password>
+                        </div>
+                        <div class="boton">
+                            <button  id="boton" type="submit" class="btn btn-success btn-block">Ingresar</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="card-footer teamDev">
+                    <!-- [SpaceD3vs] -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

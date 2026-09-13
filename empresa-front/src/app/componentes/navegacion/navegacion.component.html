@@ -1,0 +1,144 @@
+<nav>
+    <div class="uls">
+        <ul *ngIf="permisos.length > 0" class="ul">
+            <li *ngIf="permisosUser.length > 0">
+                <div class="">
+                    <h4>Usuario</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosUser">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li *ngIf="permisosSolicitante.length > 0">
+                <div class="">
+                    <h4>Solicitante</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosSolicitante">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li *ngIf="permisosPasante.length > 0">
+                <div class="">
+                    <h4>Pasante</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosPasante">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li *ngIf="permisosAdministracion.length > 0">
+                <div class="">
+                    <h4>Administracion</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosAdministracion">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li *ngIf="permisosTesoreria.length > 0">
+                <div class="">
+                    <h4>Tesoreria</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosTesoreria">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li *ngIf="permisosEnlacesExternos.length > 0">
+                <div class="">
+                    <h4>Enlaces Externos</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosEnlacesExternos">
+                            <a href="{{permisos.ruta}}" target="_blank">{{permisos.permiso}} <i
+                                    class="fa fa-external-link" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+            <li *ngIf="permisosJefe.length > 0">
+                <div class="">
+                    <h4>Lider</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosJefe">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+            <li  *ngIf="permisosRecursos.length > 0">
+                <div class="">
+                    <h4>Recursos Humanos</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosRecursos">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+            <li *ngIf="permisosAdministradorNoticias.length > 0">
+                <div class="">
+                    <h4>Noticias</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosAdministradorNoticias">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            <li *ngIf="permisosAdministradorUsuarios.length > 0">
+                <div class="">
+                    <h4>Administrador de usuarios</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosAdministradorUsuarios">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+            
+            <li *ngIf="permisosOportunidades.length > 0">
+                <div class="">
+                    <h4>Oportunidades</h4>
+                    <ul>
+                        <li *ngFor="let permisos of permisosOportunidades">
+                            <a [routerLink]="[permisos.ruta]">{{permisos.permiso}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </li>
+
+        </ul>
+
+        <div *ngIf="permisos.length == 0" class="m-4">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+
+</nav>

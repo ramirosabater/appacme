@@ -1,0 +1,26 @@
+.contenedor {
+    display: flex;
+}
+
+.card{
+    width: 95%;
+    margin: 2% 2% 10% 2%;
+    overflow-y: auto;
+    
+}
+
+select{
+    display: flex;
+    justify-content: space-around;
+}
+
+.p-1{
+    width: 100%;
+}
+
+@media (max-width:950px) {
+    .card{
+        width: 100%;
+        margin: 0px;
+        overflow-x: auto;}
+}

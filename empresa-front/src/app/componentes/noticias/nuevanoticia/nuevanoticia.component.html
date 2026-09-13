@@ -1,0 +1,194 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+
+        <div class="card-header">
+            <div class="row">
+                <h2 class="col-md-9">
+                    {{titulo}}
+                </h2>
+            </div>
+        </div>
+
+        <div class="card-body animation_aparecer">
+            <p *ngIf="isVencida" class="etiqueta-warning">Esta noticia se encuentra vencida. Cambie la fecha de
+                vencimiento para
+                que se vuelva a mostrar en la pagina principal.
+            </p>
+            <h4>Datos de la noticia</h4>
+            <p *ngIf="noticia.id_estado == 0" class="alert alert-danger">Esta noticia se encuentra desactivada</p>
+            
+
+            <form #formNoticia="ngForm" (ngSubmit)="guardarNoticia(formNoticia)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Titulo</label>
+                            <input type="text" class="form-control" name="titulo" aria-describedby=""
+                                placeholder="Ingrese titulo de noticia" [(ngModel)]="noticia.titulo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Subtitulo</label>
+                            <input type="text" class="form-control" name="subtitulo" aria-describedby=""
+                                placeholder="Ingrese subtitulo de noticia" [(ngModel)]="noticia.subtitulo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Categoria</label>
+                            <select name="id_categoria" id="" class="form-control" [(ngModel)]="noticia.id_categoria">
+                                <option value="0">Seleccione una categoria</option>
+                                <option *ngFor="let categoria of categorias" value="{{categoria.id_categoria}}">
+                                    {{categoria.categoria}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha publicacion</label>
+                            <input *ngIf="isNew==1" type="text" class="form-control" name="fecha_publicacion"
+                                value="{{noticia.fecha_publicacion}}" disabled="disabled">
+                            <h3 *ngIf="isNew==0">{{getFechaActual()}}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha fin noticia</label>
+                            <input type="date" class="form-control" name="fechafin" aria-describedby=""
+                                placeholder="Ingrese fecha fin de noticia" required="required"
+                                [(ngModel)]="noticia.fecha_vencimiento">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isNew == 0" class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Imagen</label>
+                            <input type="file" class="form-control" name="file" aria-describedby=""
+                                placeholder="Ingrese imagen de noticia" (change)="onFileChange($event)">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Cuerpo noticia</label>
+                            <textarea class="form-control" name="cuerpo" rows="3"
+                                [(ngModel)]="noticia.cuerpo_noticia"></textarea>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!loading" class="col-md-6">
+                        <button type="submit" class="btn btn-warning m-2">Guardar</button>
+                        <input type="button" class="btn btn-light" value="Cancelar" (click)="cancelar()">
+                    </div>
+
+                    <div *ngIf="loading" class="">
+                        <p>
+                            <b>Guardando noticia... Por favor no salga de esta pagina.</b>
+                        </p>
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row mb-1">
+
+                </div>
+            </form>
+        </div>
+        <div class="paneles">
+            <div *ngIf="isNew == 1" class="paneles">
+                <div class="row imagenes p-2">
+                    <div class="col-md-6 p-2 mb-2" *ngIf="isNew == 1">
+                        <h5>Imagenes / <b>Principal</b></h5>
+
+
+                        <div *ngIf="noticia.url != ''" class="">
+                            <div class="card p-2">
+                                <img src="{{ruta}}{{noticia.url}}" class="card-img-top mb-2" alt="...">
+                                <input type="button" class="btn btn-outline-secondary btn-sm" id="" value="Eliminar"
+                                    (click)="deleteImagenPrincipal(noticia.id_noticia)">
+
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="noticia.url == ''" class="col-md-12">
+                            <div class="card m-1 p-2 mb-3">
+                                <h5 class="alert alert-secondary">No hay imagen principal</h5>
+                                <label for="" class="form-label">Agrega una imagen.</label>
+                                <input type="file" class="form-control" name="file" aria-describedby=""
+                                    placeholder="Ingrese imagen de noticia" (change)="onFileChange($event)">
+                                <button type="submit" class="btn btn-outline-warning btn-sm m-2"
+                                    (click)="guardarImagenPrincipal()">Guardar</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div *ngIf="imagenesAdicionales" class="paneles">
+                    <div class="row mb-2">
+                        <h5>Imagenes / <b>Adicionales</b></h5>
+
+                        <div *ngFor="let imagen of noticiaImagenes" class="col-md-4 mb-2">
+                            <div class="card p-2">
+                                <img src="{{ruta}}{{imagen.url}}" style="height: 150px;" class="card-img-top mb-2"
+                                    alt="...">
+                                <input type="button" value="Eliminar" class="btn btn-outline-secondary btn-sm"
+                                    (click)="eliminarImagenNoticia(imagen.id_img_not)">
+                            </div>
+
+                        </div>
+                        <div *ngIf="noticiaImagenes.length == 0" class="">
+                            <h5 class="alert alert-secondary">No hay imagenes adicionales</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="imagenesAdicionales" class="row mb-2">
+                    <h5>Imagenes / Adicionales / <b>Nueva</b></h5>
+                    <div class="col-md-6">
+                        <div class="card m-1 p-2 mb-3">
+                            <label for="" class="form-label">Agregar Imagenes</label>
+                            <input type="file" class="form-control" name="file" aria-describedby=""
+                                placeholder="Ingrese imagen de noticia" (change)="onFileChange($event)">
+                            <button type="submit" class="btn btn-outline-warning btn-sm m-2"
+                                (click)="guardarImagenNoticia()">Guardar</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div *ngIf="isNew == 1" class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Acciones para noticia</h4>
+                        <p *ngIf="noticia.id_estado == 0" class="alert alert-danger">Esta noticia se encuentra
+                            desactivada</p>
+                        <input type="button" class="btn btn-light" id="" value="{{boton}}"
+                            (click)="cambiarEstadoNoticia()">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>

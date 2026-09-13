@@ -1,0 +1,99 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-week"></i> Nuevo Ticket
+                </h4>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <form #formTicket="ngForm" (ngSubmit)="guardarTicket(formTicket)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Fecha Ticket</label>
+                            <input type="date" class="form-control" name="fecha_ticket" aria-describedby=""
+                                placeholder="Ingrese fecha de inicio" required  [(ngModel)]="ticket.fecha_ticket" #fecha_ticket="ngModel">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Proveedor</label>
+                            <input type="text" class="form-control" name="proveedor" aria-describedby=""
+                                placeholder="Ingrese proveedor"
+                                required [(ngModel)]="ticket.proveedor" #proveedor="ngModel">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Punto venta</label>
+                            <input type="text" class="form-control" name="punto_venta" aria-describedby=""
+                                placeholder="Ingrese punto de venta" required [(ngModel)]="ticket.punto_venta" #punto_venta="ngModel">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nro de ticket</label>
+                            <input type="text" class="form-control" name="nro_ticket" aria-describedby=""
+                                placeholder="Ingrese nro ticket" required [(ngModel)]="ticket.nro_ticket" #nro_ticket="ngModel">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Importe sin IVA</label>
+                            <input type="number" class="form-control" name="importe_sin_iva" aria-describedby=""
+                                placeholder="Ingrese importe sin iva" required [(ngModel)]="ticket.importe_sin_iva" #importe_sin_iva="ngModel">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Cuit proveedor</label>
+                            <input type="text" class="form-control" name="cuit" aria-describedby=""
+                                placeholder="Ingrese cuit" [(ngModel)]="ticket.cuit" #cuit="ngModel"> 
+                                <span class="mt-1"><i>*Campo no obligatorio</i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Archivo Adjunto</label>
+                            <input type="file" class="form-control" name="archivo_adjunto" aria-describedby=""
+                                placeholder="Ingrese un archivo adjunto"  (change)="onFileChange($event)">
+                        </div>
+                    </div>
+                </div>
+                <!-- Guardar -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngIf="!loading" class="mb-3">
+                            <button type="submit" class="btn btn-warning m-2">Guardar</button>
+                            <input type="button" class="btn btn-light" value="Cancelar" >
+                        </div>
+                        <div *ngIf="loading" class="">
+                            <p>
+                                <b>Guardando ticket... Por favor no salga de esta pagina.</b>
+                            </p>
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,236 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card animation_aparecer">
+        <app-boton-atras></app-boton-atras>
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-solid fa-calendar-days"></i> Pedido de ropa y/o herramientas
+                </h4>
+            </div>
+
+        </div>
+
+        <div class="">
+            <p *ngIf="solicitud.estado == 1 && solicitud.estado_respuesta_empleado == null" class="alert alert-info m-2">Este pedido se encuentra Aprobado
+            </p>
+            <p *ngIf="solicitud.estado == 3" class="alert alert-warning m-2">Este pedido se encuentra Pendiente
+            </p>
+            <p *ngIf="solicitud.estado == 2 && solicitud.estado_respuesta_empleado == null" class="alert alert-danger m-2">Este pedido se encuentra Denegado
+            </p>
+            <p *ngIf="solicitud.estado_respuesta_empleado == 2" class="alert alert-danger m-2">Este pedido se encuentra Rechazado
+            </p>
+            <p *ngIf="solicitud.estado_respuesta_empleado == 1" class="alert alert-success m-2">Este pedido se encuentra Recibido
+            </p>
+
+
+            <div class="card">
+                <div class="card-header">
+                    Datos del pedido
+                </div>
+                <div class="card-body">
+                    <table class="table table-hovered">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Numero de solicitud</th>
+                                <td>000-{{solicitud.id_solicitud}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Solicitante</th>
+                                <td>{{jefe_directo.nombre}} {{jefe_directo.apellido}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Empleado</th>
+                                <td>{{empleado.nombre}} {{empleado.apellido}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Fecha de solicitud</th>
+                                <td>{{solicitud.fecha_pedido}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-header">
+                    Detalle del pedido
+                </div>
+                <div class="card-body">
+                    <table class="table table-hovered">
+                        <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>Talle</td>
+                                <td>Cantidad</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of solicitud.datos">
+                                <th scope="row">{{item.desc_elemento}}</th>
+                                <td>{{item.talle}}</td>
+                                <td>{{item.cantidad}}</td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row"></th>
+                                <td>
+                                    <h3>Cantidad elementos</h3>
+                                </td>
+                                <td>
+                                    <h3 class="etiqueta-secondary">{{cantidad_elementos}}</h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    Trazabilidad del pedido
+                </div>
+                <div class="card-body">
+                    <table class="table table-hovered">
+                        <tbody>
+                            <tr>
+                                <th scope="row">RRHH</th>
+                                <td>
+                                    <div class="" *ngIf="solicitud.estado == 3">
+                                        <div class="" *ngIf="user == 2">
+                                            <div class="" *ngIf="rechazar != 1">
+                                                <input *ngIf="!loading" type="button" value="Aprobar"
+                                                    class="btn btn-sm btn-primary m-1" (click)="aprobarRRHH()">
+                                                <input *ngIf="!loading" type="button" value="Rechazar"
+                                                    class="btn btn-sm btn-light m-1" (click)="btnRechazarRRHH()">
+                                                <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+        
+                                            <div class="" *ngIf="rechazar == 1">
+        
+                                                <div *ngIf="!loading" class="">
+                                                    <label for="">Motivo</label>
+        
+                                                    <textarea name="" id="" cols="6" class="form-control"
+                                                        placeholder="Ingrese motivo" #motivoRRHH></textarea>
+                                                    <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                                        (click)="rechazarRRHH(motivoRRHH)">
+                                                    <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                                        (click)="btnCancelarRechazarRRHH()">
+                                                </div>
+                                                <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="solicitud.estado == 3 && user !=2">
+                                        <p class="etiqueta-secondary">Pendiente</p>
+                                    </div>
+                                    <div *ngIf="solicitud.estado == 1">
+                                        <p class="etiqueta-third">Aprobado</p>
+                                    </div>
+                                    <div *ngIf="solicitud.estado == 2">
+                                        <p class="etiqueta-danger">Rechazado</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="solicitud.estado == 2">
+                                <th>Motivo rechazo RRHH</th>
+                                <td><p class="etiqueta-secondary">{{solicitud.descargo_recursos}}</p>
+                                    </td>
+                            </tr>
+                            <tr *ngIf="solicitud.estado != 2">
+                                <th scope="row">Empleado</th>
+                                <td>
+
+                                    <div class="" *ngIf="solicitud.estado_respuesta_empleado == null && user == 3 && solicitud.estado == 1">
+                                        <div class="" *ngIf="user == 3">
+                                            <div class="" *ngIf="rechazar != 1">
+                                                <input *ngIf="!loading" type="button" value="Recibido"
+                                                    class="btn btn-sm btn-primary m-1" (click)="aprobarEmpleado()">
+                                                <input *ngIf="!loading" type="button" value="Rechazar"
+                                                    class="btn btn-sm btn-light m-1" (click)="btnRechazarRRHH()">
+                                                <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </div>
+        
+                                            <div class="" *ngIf="rechazar == 1">
+        
+                                                <div *ngIf="!loading" class="">
+                                                    <label for="">Motivo</label>
+        
+                                                    <textarea name="" id="" cols="6" class="form-control"
+                                                        placeholder="Ingrese motivo" #motivoEmpleado></textarea>
+                                                    <input type="button" value="Enviar" class="btn btn-sm btn-secondary m-1"
+                                                        (click)="rechazarEmpleado(motivoEmpleado)">
+                                                    <input type="button" value="Cancelar" class="btn btn-sm btn-light m-1"
+                                                        (click)="btnCancelarRechazarRRHH()">
+                                                </div>
+                                                <div *ngIf="loading" class="spinner-border spinner-border-sm pl-2"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+        
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="solicitud.estado_respuesta_empleado == null && user != 3 && solicitud.estado != 2">
+                                        <p class="etiqueta-secondary">Pendiente</p>
+                                    </div>
+                                    <div *ngIf="solicitud.estado_respuesta_empleado == 1">
+                                        <p class="etiqueta-success">Recibido</p>
+                                    </div>
+                                    <div *ngIf="solicitud.estado_respuesta_empleado == 2">
+                                        <p class="etiqueta-danger">Rechazado</p>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="solicitud.estado_respuesta_empleado == 2">
+                                <th>Motivo rechazo Empleado</th>
+                                <td><p class="etiqueta-secondary">{{solicitud.respuesta_empleado}}</p>
+                                    </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">Estado</th>
+                                <td>
+                                    <p *ngIf="solicitud.estado == 1 && solicitud.estado_respuesta_empleado == null" class="alert alert-info m-2">Este pedido se encuentra Aprobado
+                                    </p>
+                                    <p *ngIf="solicitud.estado == 3" class="alert alert-warning m-2">Este pedido se encuentra Pendiente
+                                    </p>
+                                    <p *ngIf="solicitud.estado == 2 && solicitud.estado_respuesta_empleado == null" class="alert alert-danger m-2">Este pedido se encuentra Denegado
+                                    </p>
+                                    <p *ngIf="solicitud.estado_respuesta_empleado == 2" class="alert alert-danger m-2">Este pedido se encuentra Rechazado
+                                    </p>
+                                    <p *ngIf="solicitud.estado_respuesta_empleado == 1" class="alert alert-success m-2">Este pedido se encuentra Recibido
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>

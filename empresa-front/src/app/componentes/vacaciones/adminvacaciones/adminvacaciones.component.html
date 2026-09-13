@@ -1,0 +1,78 @@
+<barra-superior></barra-superior>
+<div class="contenedor">
+    <app-navegacion *ngIf="loginService.data.showNav"></app-navegacion>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h4 class="col-md-9">
+                    <i class="fa-regular fa-calendar-days"></i> Administrador de Vacaciones
+                </h4>
+
+            </div>
+        </div>
+
+        <div *ngIf="vacaciones.length > 0" class="vista-responsive">
+            <h3 class="p-2">Listado de Vacaciones</h3>
+            <div *ngFor="let vacacion of vacaciones" class="">
+                <div class="info p-2">
+                    <p>Nro Vacaciones: <b>000-{{vacacion.id_vacaciones}}</b></p>
+                    <p>Solicitante: <b>{{vacacion.nombre}} {{vacacion.apellido}}</b></p>
+                    <p>Fecha Inicio: <b>{{vacacion.fecha_inicio}}</b> Fecha Fin: <b>{{vacacion.fecha_fin}}</b></p>
+                    <p>Fecha Reintegro: <b>{{vacacion.fecha_reintegro}}</b></p>
+                    <p>Cantidad de dias: <b>{{vacacion.cantidad_dias}}</b></p>
+                    <p class="estado">Estado: <b
+                            class="etiqueta-{{vacacion.estado_color}}">{{vacacion.estado_string}}</b></p>
+                    <div class="boton">
+                        <a class="btn btn-light" [routerLink]="['/ver-vacacion', vacacion.id_vacaciones,1]">ver</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body vista-monitor">
+            <table *ngIf="vacaciones.length > 0" class="table table-sm table-hover">
+                <thead>
+                    <tr>
+                        <th>Solicitante</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Fecha Reintegro</th>
+                        <th>Dias Solicitados</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vacacion of vacaciones">
+                        <td>{{vacacion.nombre}} {{vacacion.apellido}}</td>
+                        <td>{{vacacion.fecha_inicio}}</td>
+                        <td>{{vacacion.fecha_fin}}</td>
+                        <td>{{vacacion.fecha_reintegro}}</td>
+                        <td>
+                            <p class="etiqueta-secondary">{{vacacion.cantidad_dias}}</p>
+                        </td>
+                        <td>
+                            <p class="etiqueta-{{vacacion.estado_color}}">{{vacacion.estado_string}} </p>
+                        </td>
+                        <td>
+                            <a class="btn btn-light btn-sm"
+                                [routerLink]="['/ver-vacacion', vacacion.id_vacaciones,1]">ver</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="vacaciones.length == 0" class="col-md-12">
+            <div class="mb-3 text-center">
+                <h4>No hay vacaciones para revisar</h4>
+            </div>
+            <div class="alert alert-warning" role="alert">
+                Las vacaciones se mostraran aqui.
+            </div>
+        </div>
+
+    </div>
+</div>
