@@ -44,7 +44,7 @@ import { SolicitudesDineroRrhhComponent } from './componentes/solicitud-dinero/s
 import { LegajosPasanteComponent } from './componentes/legajo/legajos-pasante/legajos-pasante.component';
 import { DescargaRendicionesComponent } from './componentes/solicitud-dinero/descarga-rendiciones/descarga-rendiciones.component';
 import { OportunidadesComponent } from './componentes/oportunidades/oportunidades.component';
-import { DetalleOportunidadComponent } from './componentes/oportunidades/detalle-oportunidad/detalle-oportunidad/detalle-oportunidad.component';
+import { DetalleOportunidadComponent } from './componentes/oportunidades/detalle-oportunidad/detalle-oportunidad.component';
 import { NuevaOportunidadComponent } from './componentes/oportunidades/nueva-oportunidad/nueva-oportunidad.component';
 import { ListaPostulantesComponent } from './componentes/oportunidades/lista-postulantes/lista-postulantes.component';
 import { ListaPostulantesGeneralesComponent } from './componentes/oportunidades/lista-postulantes-generales/lista-postulantes-generales.component';
